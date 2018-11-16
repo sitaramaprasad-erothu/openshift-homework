@@ -7,7 +7,7 @@ a fully automated deployment of OpenShift.
 Please perform the following:
 
 * create a new environment
-* clone a repo - https://github.com/chamilton614/ocp_advanced_deployment_homework.git
+* clone a repo - https://github.com/tripathisushil/openshift-homework.git
 * execute the command - 
 * examine the output through log files - 
 * examine the deployed OpenShift to ensure that all aspects were deployed properly
