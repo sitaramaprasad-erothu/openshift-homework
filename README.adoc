@@ -1,0 +1,17 @@
+= OpenShift Container Platform - Advanced Deployment - Homework for Chad J. Hamilton
+Websites for GWAR and Hatebreed
+
+Use the files in this repo to guide you on your way to creating
+a fully automated deployment of OpenShift.
+
+Please perform the following:
+
+* create a new environment
+* clone a repo - https://github.com/chamilton614/ocp_advanced_deployment_homework.git
+* execute the command - 
+* examine the output through log files - 
+* examine the deployed OpenShift to ensure that all aspects were deployed properly
+
+
+
+
