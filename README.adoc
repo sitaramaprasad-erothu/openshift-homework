@@ -1,4 +1,4 @@
-= OpenShift Container Platform - Advanced Deployment - Homework for Chad J. Hamilton
+= OpenShift Container Platform - Advanced Deployment - Homework for Sushil K. Tripathi
 Websites for GWAR and Hatebreed
 
 Use the files in this repo to guide you on your way to creating
