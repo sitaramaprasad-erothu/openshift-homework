@@ -1,4 +1,4 @@
-
+---
 - name: Prepare GUID environment variable across all hosts
   hosts: all
   tasks:
@@ -57,7 +57,7 @@
 #  hosts: nfs
 #  tasks:
 #    - name: Create PV directories
-#      script: /root/ocp_advanced_deployment_homework/scripts/create_pvs.sh
+#      script: /root/openshift-homework/scripts/create_pvs.sh
 #    - name: Restarting NFS Server...
 #      shell: systemctl restart nfs-server
 #
@@ -65,13 +65,13 @@
 #  hosts: localhost
 #  tasks:
 #    - name: Create ReadWriteOnce PV definitions
-#      script: /root/ocp_advanced_deployment_homework/scripts/pvs_5Gsize.sh
+#      script: /root/openshift-homework/scripts/pvs_5Gsize.sh
 #
 #- name: Create 25 definitions files for PVs 10G size
 #  hosts: localhost
 #  tasks:
 #    - name: Create ReadWriteMany PV definitions
-#      script: /root/ocp_advanced_deployment_homework/scripts/pvs_10Gsize.sh
+#      script: /root/openshift-homework/scripts/pvs_10Gsize.sh
 #
 #- name: Create all PVs from definitions files
 #  hosts: localhost
@@ -91,7 +91,7 @@
 #  hosts: localhost
 #  tasks:
 #    - name: Create a Smoke Test Application
-#      script: /root/ocp_advanced_deployment_homework/scripts/nodejs_mongo_app.sh
+#      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
 #
 #------------------------------------------      
 #- name: Jenkins Setup
