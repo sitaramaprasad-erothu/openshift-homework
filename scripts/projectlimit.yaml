@@ -6,8 +6,8 @@ metadata:
 spec:
   limits:
   - max:
-      cpu: 100m
-      memory: 750Mi
+      cpu: 2000m
+      memory: 4Gi
     min:
       cpu: 10m
       memory: 5Mi
@@ -16,8 +16,8 @@ spec:
       cpu: 50m
       memory: 100Mi
     max:
-      cpu: 100m
-      memory: 750Mi
+      cpu: 2000m
+      memory: 4Gi
     min:
       cpu: 10m
       memory: 5Mi
