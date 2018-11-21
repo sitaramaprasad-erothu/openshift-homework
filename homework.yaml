@@ -1,4 +1,10 @@
 ---
+- name: Update script permissions
+  hosts: localhost
+  tasks:
+    - name: Update script permissions
+      shell: chmod +x /root/openshift-homework/scripts/*.sh
+
 - name: Generate Inventory Hosts File
   hosts: localhost
   tasks:
