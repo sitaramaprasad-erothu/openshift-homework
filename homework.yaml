@@ -191,7 +191,7 @@
       shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
       
 - name: Switch to Alpha Corp User
- hosts: localhost
+  hosts: localhost
   tasks:
     - name: Switch to Alpha Corp User
       shell: oc login -u amy -p r3dh4t1!
