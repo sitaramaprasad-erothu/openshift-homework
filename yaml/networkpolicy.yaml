@@ -1,28 +1,36 @@
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: allow-from-default-namespace
-spec:
-  podSelector:
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: default 
-   
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: allow-from-same-namespace
-spec:
-  podSelector:
-  ingress: 
-  - from:
-    - podSelector: {} 
-
-kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: default-deny
-spec:
-  podSelector:
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+items:
+-kind: NetworkPolicy
+ apiVersion: networking.k8s.io/v1
+ metadata:
+   name: allow-from-default-namespace
+ spec:
+   podSelector:
+   ingress:
+   - from:
+     - namespaceSelector:
+         matchLabels:
+           name: default 
+    
+-kind: NetworkPolicy
+ apiVersion: networking.k8s.io/v1
+ metadata:
+   name: allow-from-same-namespace
+ spec:
+   podSelector:
+   ingress: 
+   - from:
+     - podSelector: {} 
+ 
+-kind: NetworkPolicy
+ apiVersion: networking.k8s.io/v1
+ metadata:
+   name: default-deny
+ spec:
+   podSelector:
+kind: List
+metadata: {}
