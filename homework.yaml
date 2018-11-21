@@ -190,7 +190,7 @@
     - name: Add Beta User As Admin to Project
       shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
       
- name: Switch to Alpha Corp User
+- name: Switch to Alpha Corp User
  hosts: localhost
   tasks:
     - name: Switch to Alpha Corp User
