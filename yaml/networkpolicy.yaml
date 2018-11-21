@@ -9,6 +9,7 @@ spec:
     - namespaceSelector:
         matchLabels:
           name: default 
+   
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -18,6 +19,7 @@ spec:
   ingress: 
   - from:
     - podSelector: {} 
+
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:

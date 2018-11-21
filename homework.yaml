@@ -142,17 +142,17 @@
 #    - name: Adding Label to User Group for Beta Group
 #      shell: oc label group/alpha-corp client=alpha
 #      
-- name: Applying Limits to Default Templet
-  hosts: localhost
-  tasks:
-    - name: Applying limits to default templet
-      shell: oc create -f /root/openshift-homework/scripts/projectlimit.yaml
-
+#- name: Applying Limits to Default Templet
+#  hosts: localhost
+#  tasks:
+#    - name: Applying limits to default templet
+#      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
+#
 - name: Applying Network Policy
   hosts: localhost
   tasks:
     - name: Apply network policy 
-      shell: oc create -f /root/openshift-homework/scripts/networkpolicy.yaml
+      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
       
 #- name: Create Project for Alpha Corp
 #  hosts: localhost
