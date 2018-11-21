@@ -130,7 +130,7 @@
     - name: Adding Label to User Group for Beta Group
       shell: oc label group/beta-corp client=beta
 
-name: Adding Label to User Group Alpha Corp
+- name: Adding Label to User Group Alpha Corp
   hosts: localhost
   tasks:
     - name: Adding Label to User Group for Beta Group
