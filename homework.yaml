@@ -142,13 +142,13 @@
 #    - name: Adding Label to User Group for Beta Group
 #      shell: oc label group/alpha-corp client=alpha
 #      
-- name: Applying Limits to Default Templet
-  hosts: localhost
-  tasks:
-    - name: Applying limits to default templet
-      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
-
-      #- name: Applying Network Policy
+#- name: Applying Limits to Default Templet
+#  hosts: localhost
+#  tasks:
+#    - name: Applying limits to default templet
+#      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
+#
+#- name: Applying Network Policy
 #  hosts: localhost
 #  tasks:
 #    - name: Apply network policy 
@@ -190,17 +190,17 @@
 #    - name: Add Beta User As Admin to Project
 #      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
 #      
-#- name: Switch to Alpha Corp User
-#  hosts: localhost
-#  tasks:
-#    - name: Switch to Alpha Corp User
-#      shell: oc login -u amy -p r3dh4t1!
-#      
-#- name: Deploy App to Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      import_playbook: /root/openshift-homework/container-pipelines/basic-spring-boot/.applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+- name: Switch to Alpha Corp User
+  hosts: localhost
+  tasks:
+    - name: Switch to Alpha Corp User
+      shell: oc login -u amy -p r3dh4t1!
+      
+- name: Deploy App to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      import_playbook: /root/openshift-homework/container-pipelines/basic-spring-boot/.applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
 
 #- name: Switch to Beta Corp User
 #  hosts: localhost
