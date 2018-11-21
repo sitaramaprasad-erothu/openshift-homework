@@ -200,7 +200,7 @@
   hosts: localhost
   tasks:
     - name: Deploy App to Alpha Corp
-      shell: ansible-playbook -i /root/openshift-homework/container-pipelines/basic-spring-boot/.applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+      shell: /root/openshift-homework/scripts/deployapp-AlphaCorp.sh
 
 #- name: Switch to Beta Corp User
 #  hosts: localhost
