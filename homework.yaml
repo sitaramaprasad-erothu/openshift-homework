@@ -1,197 +1,197 @@
 ---
-#- name: Update script permissions
-#  hosts: localhost
-#  tasks:
-#    - name: Update script permissions
-#      shell: chmod +x /root/openshift-homework/scripts/*.sh
-#
-#- name: Generate Inventory Hosts File
-#  hosts: localhost
-#  tasks:
-#    - name: Generate Inventory script
-#      script: /root/openshift-homework/scripts/generate_inventory.sh
-#
-#- name: Prepare GUID environment variable across all hosts
-#  hosts: all
-#  tasks:
-#    - name: All GUID env variable
-#      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
-#
-#- name: Verify Installation and Configuration of Docker
-#  hosts: nodes
-#  tasks:
-#    - name: docker restart
-#      shell: systemctl restart docker
-#
-#- name: Verify NFS Shared Volumes on Hosts
-#  hosts: nfs
-#  tasks:
-#    - name: List NFS Shared Volumes
-#      shell: exportfs
-#
-#- name: Install packages and config auth
-#  hosts: localhost
-#  tasks:
-#    - name: required packages are present
-#      yum:
-#        name:
-#          - openshift-ansible
-#          - atomic-openshift-clients
-#        state: present
-#
-#- name: Execute the openshift-ansible prerequisites
-#  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-#
-#- name: Execute the openshift-ansible Deployer
-#  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
-#
-#- name: Verify OpenShift Cluster
-#  hosts: masters[0]
-#  tasks:
-#    - fetch:
-#        src: /root/.kube/config
-#        dest: /root/.kube/config
-#        flat: yes
-#        
-#- name: Post installation configuration
-#  hosts: localhost
-#  tasks:
-#    - name: Verify logged in User is system:dmin
-#      shell: oc whoami | grep system:admin
-#
-#- name: Admin User admin as Cluster Admin
-#  hosts: localhost
-#  tasks:
-#    - name: Admin User admin as Cluster Admin
-#      shell: oc adm policy add-cluster-role-to-user cluster-admin user
-#
-#- name: Create PVs for Users
-#  hosts: nfs
-#  tasks:
-#    - name: Create PV directories
-#      script: /root/openshift-homework/scripts/create_pvs.sh
-#    - name: Restarting NFS Server...
-#      shell: systemctl restart nfs-server
-#
-#- name: Create 25 definitions files for PVs 5G size
-#  hosts: localhost
-#  tasks:
-#    - name: Create ReadWriteOnce PV definitions
-#      script: /root/openshift-homework/scripts/pvs_5Gsize.sh
-#
-#- name: Create 25 definitions files for PVs 10G size
-#  hosts: localhost
-#  tasks:
-#    - name: Create ReadWriteMany PV definitions
-#      script: /root/openshift-homework/scripts/pvs_10Gsize.sh
-#
-#- name: Create all PVs from definitions files
-#  hosts: localhost
-#  tasks:
-#    - name: Create all defined PVs
-#      shell: cat /root/pvs/* | oc create -f -
-#
-#- name: Fix NFS Persistent Volume Recycling
-#  hosts: nodes
-#  tasks:
-#    - name: Pull Latest OSE-Recycler Image
-#      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
-#    - name: Tag OSE-Recycler Image
-#      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
-#
-#- name: Smoke Test
-#  hosts: localhost
-#  tasks:
-#    - name: Create a Smoke Test Application
-#      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
-#
-#- name: Kube Config
-#  hosts: localhost
-#  tasks:
-#    - name: copy kube config
-#      shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
-#
-#- name: Login System Admin
-#  hosts: localhost
-#  tasks:
-#    - name: change user to system:dmin
-#      shell: oc login -u system:admin
-#
-#
-#- name: Creating Group For Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding user for Alpha Group
-#      shell: oc adm groups new alpha-corp andrew amy
-#
-#- name: Creating Group For Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding user for Beta Group
-#      shell: oc adm groups new beta-corp brian betty
-#
-#- name: Adding Label to User Group Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding Label to User Group for Beta Group
-#      shell: oc label group/beta-corp client=beta
-#
-#- name: Adding Label to User Group Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding Label to User Group for Beta Group
-#      shell: oc label group/alpha-corp client=alpha
-#      
-#- name: Applying Limits to Default Templet
-#  hosts: localhost
-#  tasks:
-#    - name: Applying limits to default templet
-#      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
-#
-#- name: Applying Network Policy
-#  hosts: localhost
-#  tasks:
-#    - name: Apply network policy 
-#      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
-#      
-#- name: Create Project for Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Project for Alpha Corp
-#      shell: oc adm new-project alpha-project --node-selector='client=alpha' --display-name='HR' --description='HR For Alpha'
-#
-#- name: Label NameSpace for Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Label NameSpace for Alpha Corp
-#      shell: oc label namespace alpha-project client=alpha
-#      
-#- name: Create Project for Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Project for Beta Corp
-#      shell: oc adm new-project beta-project --node-selector='client=beta' --display-name='Employee' --description='Employee For Beta'
-#
-#- name: Label NameSpace for Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Label NameSpace for Beta Corp
-#      shell: oc label namespace beta-project client=beta
-#
-#- name: Add Alpha User As Admin to Project
-#  hosts: localhost
-#  tasks:
-#    - name: Add Alpha User As Admin to Project
-#      shell: oc adm policy add-role-to-group admin alpha-corp -n alpha-project      
-#
-#- name: Add Beta User As Admin to Project
-#  hosts: localhost
-#  tasks:
-#    - name: Add Beta User As Admin to Project
-#      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
-#      
-- name: Switch to Alpha Corp User
+- name: Update script permissions
   hosts: localhost
+  tasks:
+    - name: Update script permissions
+      shell: chmod +x /root/openshift-homework/scripts/*.sh
+
+- name: Generate Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Generate Inventory script
+      script: /root/openshift-homework/scripts/generate_inventory.sh
+
+- name: Prepare GUID environment variable across all hosts
+  hosts: all
+  tasks:
+    - name: All GUID env variable
+      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
+
+- name: Verify Installation and Configuration of Docker
+  hosts: nodes
+  tasks:
+    - name: docker restart
+      shell: systemctl restart docker
+
+- name: Verify NFS Shared Volumes on Hosts
+  hosts: nfs
+  tasks:
+    - name: List NFS Shared Volumes
+      shell: exportfs
+
+- name: Install packages and config auth
+  hosts: localhost
+  tasks:
+    - name: required packages are present
+      yum:
+        name:
+          - openshift-ansible
+          - atomic-openshift-clients
+        state: present
+
+- name: Execute the openshift-ansible prerequisites
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+
+- name: Execute the openshift-ansible Deployer
+  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+
+- name: Verify OpenShift Cluster
+  hosts: masters[0]
+  tasks:
+    - fetch:
+        src: /root/.kube/config
+        dest: /root/.kube/config
+        flat: yes
+        
+- name: Post installation configuration
+  hosts: localhost
+  tasks:
+    - name: Verify logged in User is system:dmin
+      shell: oc whoami | grep system:admin
+
+- name: Admin User admin as Cluster Admin
+  hosts: localhost
+  tasks:
+    - name: Admin User admin as Cluster Admin
+      shell: oc adm policy add-cluster-role-to-user cluster-admin user
+
+- name: Create PVs for Users
+  hosts: nfs
+  tasks:
+    - name: Create PV directories
+      script: /root/openshift-homework/scripts/create_pvs.sh
+    - name: Restarting NFS Server...
+      shell: systemctl restart nfs-server
+
+- name: Create 25 definitions files for PVs 5G size
+  hosts: localhost
+  tasks:
+    - name: Create ReadWriteOnce PV definitions
+      script: /root/openshift-homework/scripts/pvs_5Gsize.sh
+
+- name: Create 25 definitions files for PVs 10G size
+  hosts: localhost
+  tasks:
+    - name: Create ReadWriteMany PV definitions
+      script: /root/openshift-homework/scripts/pvs_10Gsize.sh
+
+- name: Create all PVs from definitions files
+  hosts: localhost
+  tasks:
+    - name: Create all defined PVs
+      shell: cat /root/pvs/* | oc create -f -
+
+- name: Fix NFS Persistent Volume Recycling
+  hosts: nodes
+  tasks:
+    - name: Pull Latest OSE-Recycler Image
+      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+    - name: Tag OSE-Recycler Image
+      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
+
+- name: Smoke Test
+  hosts: localhost
+  tasks:
+    - name: Create a Smoke Test Application
+      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
+
+- name: Kube Config
+  hosts: localhost
+  tasks:
+    - name: copy kube config
+      shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
+
+- name: Login System Admin
+  hosts: localhost
+  tasks:
+    - name: change user to system:dmin
+      shell: oc login -u system:admin
+
+
+- name: Creating Group For Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding user for Alpha Group
+      shell: oc adm groups new alpha-corp andrew amy
+
+- name: Creating Group For Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding user for Beta Group
+      shell: oc adm groups new beta-corp brian betty
+
+- name: Adding Label to User Group Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Beta Group
+      shell: oc label group/beta-corp client=beta
+
+- name: Adding Label to User Group Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Beta Group
+      shell: oc label group/alpha-corp client=alpha
+      
+- name: Applying Limits to Default Templet
+  hosts: localhost
+  tasks:
+    - name: Applying limits to default templet
+      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
+
+- name: Applying Network Policy
+  hosts: localhost
+  tasks:
+    - name: Apply network policy 
+      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
+      
+- name: Create Project for Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Project for Alpha Corp
+      shell: oc adm new-project alpha-project --node-selector='client=alpha' --display-name='HR' --description='HR For Alpha'
+
+- name: Label NameSpace for Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Label NameSpace for Alpha Corp
+      shell: oc label namespace alpha-project client=alpha
+      
+- name: Create Project for Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Project for Beta Corp
+      shell: oc adm new-project beta-project --node-selector='client=beta' --display-name='Employee' --description='Employee For Beta'
+
+- name: Label NameSpace for Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Label NameSpace for Beta Corp
+      shell: oc label namespace beta-project client=beta
+
+- name: Add Alpha User As Admin to Project
+  hosts: localhost
+  tasks:
+    - name: Add Alpha User As Admin to Project
+      shell: oc adm policy add-role-to-group admin alpha-corp -n alpha-project      
+
+- name: Add Beta User As Admin to Project
+  hosts: localhost
+  tasks:
+    - name: Add Beta User As Admin to Project
+      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
+      
+ name: Switch to Alpha Corp User
+ hosts: localhost
   tasks:
     - name: Switch to Alpha Corp User
       shell: oc login -u amy -p r3dh4t1!
@@ -200,7 +200,7 @@
   hosts: localhost
   tasks:
     - name: Deploy App to Alpha Corp
-      shell: /root/openshift-homework/scripts/deployapp-AlphaCorp.sh
+      shell: /root/openshift-homework/scripts/cicd.sh
 
 #- name: Switch to Beta Corp User
 #  hosts: localhost

@@ -10,7 +10,7 @@ oc policy add-role-to-group edit system:serviceaccounts:cicd -n task-test
 oc policy add-role-to-group edit system:serviceaccounts:cicd -n task-prod
 
 # Deploy Demo
-oc new-app -n cicd -f cicd-template.yaml
+oc new-app -n cicd -f /root/openshift-homework/yaml/cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
 sleep 300
