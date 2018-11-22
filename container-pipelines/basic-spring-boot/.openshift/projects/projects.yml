@@ -4,24 +4,24 @@ items:
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: tasks-build
+    name: basic-spring-boot-build
     creationTimestam: null
-  displayName: Tasks-Duild - Build
+  displayName: Spring Rest App - Build
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: tasks-dev
+    name: basic-spring-boot-dev
     creationTimestam: null
-  displayName: Tasks-Dev - Dev
+  displayName: Spring Rest App - Dev
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: tasks-test
+    name: basic-spring-boot-stage
     creationTimestam: null
-  displayName: Tasks-Test - Test
+  displayName: Spring Rest App - Stage
 - kind: ProjectRequest
   apiVersion: v1
   metadata:
-    name: tasks-prod
+    name: basic-spring-boot-prod
     creationTimestam: null
-  displayName: Tasks-Prod - Prod
+  displayName: Spring Rest App - Prod

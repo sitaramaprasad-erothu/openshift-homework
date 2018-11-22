@@ -1,5 +1,5 @@
 APPLICATION_NAME=basic-spring-boot
-NAMESPACE=tasks-prod
-SA_NAMESPACE=tasks-build
+NAMESPACE=basic-spring-boot-prod
+SA_NAMESPACE=basic-spring-boot-build
 READINESS_RESPONSE=status.:.UP
 READINESS_PATH=/health
