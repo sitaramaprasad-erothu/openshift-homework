@@ -288,8 +288,10 @@ openshift_additional_projects={'openshift-template-service-broker': {'default_no
 ###########################################################################
 
 # default selectors for router and registry services
-openshift_router_selector='node-role.kubernetes.io/infra=true'
-openshift_registry_selector='node-role.kubernetes.io/infra=true'
+#openshift_router_selector='node-role.kubernetes.io/infra=true'
+#openshift_registry_selector='node-role.kubernetes.io/infra=true'
+openshift_router_selector={'env':'infra'}
+openshift_registry_selector={'env':'infra'}
 
 openshift_hosted_router_replicas=2
 

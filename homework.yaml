@@ -63,7 +63,7 @@
   hosts: localhost
   tasks:
     - name: Admin User admin as Cluster Admin
-      shell: oc adm policy add-cluster-role-to-user cluster-admin user
+      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
 
 - name: Create PVs for Users
   hosts: nfs
