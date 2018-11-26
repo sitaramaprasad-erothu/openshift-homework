@@ -9,6 +9,10 @@ oc policy add-role-to-group edit system:serviceaccounts:cicd -n task-dev
 oc policy add-role-to-group edit system:serviceaccounts:cicd -n task-test
 oc policy add-role-to-group edit system:serviceaccounts:cicd -n task-prod
 
+oc adm pod-network join-projects --to=cicd task-dev task-test task-prod >/dev/null 2>&1
+oc new-app jenkins-persistent -n cicd
+
+
 # Deploy Demo
 oc new-app -n cicd -f /root/openshift-homework/yaml/cicd-template.yaml
 
