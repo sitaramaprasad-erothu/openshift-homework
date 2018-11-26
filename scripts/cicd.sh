@@ -1,10 +1,10 @@
 # Create Projects
 
 oc login -u system:admin
-oc new-project alpha-task-dev --display-name="Tasks - Dev"
-oc new-project alpha-task-test --display-name="Tasks - TEST"
-oc new-project alpha-task-prod --display-name="Tasks - Prod"
-oc new-project alpha-task-build --display-name="CI/CD"
+oc new-project alpha-task-dev --display-name="Alpha-Tasks-Dev"
+oc new-project alpha-task-test --display-name="Alpha-Tasks-TEST"
+oc new-project alpha-task-prod --display-name="Alpha-Tasks-Prod"
+oc new-project alpha-task-build --display-name="Alpha-Tasks-Build"
 
 # Grant Jenkins Access to Projects
 oc policy add-role-to-group edit system:serviceaccount:alpha-task-build:jenkins -n alpha-task-dev
