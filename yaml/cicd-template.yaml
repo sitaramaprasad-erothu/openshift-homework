@@ -29,7 +29,7 @@ parameters:
   required: true
 - displayName: Ephemeral
   description: Use no persistent storage for Gogs and Nexus
-  value: "true"
+  value: "false"
   name: EPHEMERAL
   required: true
 - description: Webhook secret
