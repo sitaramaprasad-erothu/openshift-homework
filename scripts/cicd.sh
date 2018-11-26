@@ -11,6 +11,11 @@ oc policy add-role-to-group edit system:serviceaccounts:task-build -n $comp-task
 oc policy add-role-to-group edit system:serviceaccounts:task-build -n $comp-task-test
 oc policy add-role-to-group edit system:serviceaccounts:task-build -n $comp-task-prod
 
+oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-dev
+oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-test
+oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-prod
+oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-build
+
 oc adm pod-network join-projects --to=$comp-task-build $comp-task-dev $comp-task-test $comp-task-prod >/dev/null 2>&1
 
 oc login -u amy -p r3dh4t1!
