@@ -7,10 +7,11 @@ oc new-project alpha-task-prod --display-name="Tasks - Prod"
 oc new-project alpha-task-build --display-name="CI/CD"
 
 # Grant Jenkins Access to Projects
-oc policy add-role-to-group edit system:serviceaccounts:alpha-task-build -n alpha-task-dev
-oc policy add-role-to-group edit system:serviceaccounts:alpha-task-build -n alpha-task-test
-oc policy add-role-to-group edit system:serviceaccounts:alpha-task-build -n alpha-task-prod
-oc policy add-role-to-group edit system:serviceaccounts:alpha-task-build -n alpha-task-build
+oc policy add-role-to-group edit system:serviceaccount:alpha-task-build:jenkins -n alpha-task-dev
+oc policy add-role-to-group edit system:serviceaccount:alpha-task-build:jenkins -n alpha-task-test
+oc policy add-role-to-group edit system:serviceaccount:alpha-task-build:jenkins -n alpha-task-prod
+oc policy add-role-to-group edit system:serviceaccount:alpha-task-build:jenkins -n alpha-task-build
+
 
 oc policy add-role-to-group admin alpha-corp -n alpha-task-dev
 oc policy add-role-to-group admin alpha-corp -n alpha-task-test
