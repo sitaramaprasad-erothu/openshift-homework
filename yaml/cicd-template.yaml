@@ -168,11 +168,20 @@ objects:
               }
               stage('Promote to PROD') {
                 steps {
-                  sh "sleep 10"
+                  script {
+                   openshift.withCluster() {
+                     openshift.withProject(env.PROD_PROJECT) {
+                         openshift.tag("${env.DEV_PROJECT}/tasks:latest", "${env.PROD_PROJECT}/tasks:prod");
+                     }
+                   }
+                 }
+                 sh "sleep 300";
                 }
               }
               stage('Deploy Prod') {
                 steps {
+                
+                  
                   script {
                     openshift.withCluster() {
                       openshift.withProject(env.Prod_PROJECT) {
