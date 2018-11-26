@@ -16,9 +16,12 @@ oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-test
 oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-prod
 oc policy add-role-to-group admin alpha-corp:task-build -n $comp-task-build
 
+oc policy add-role-to-group 
+
 oc adm pod-network join-projects --to=$comp-task-build $comp-task-dev $comp-task-test $comp-task-prod >/dev/null 2>&1
 
 oc login -u amy -p r3dh4t1!
+oc project $comp-task-build
 
 oc new-app jenkins-persistent -n $comp-task-build
 
