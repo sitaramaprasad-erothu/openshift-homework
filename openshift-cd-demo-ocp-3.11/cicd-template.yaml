@@ -11,16 +11,12 @@ metadata:
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
 - displayName: DEV project name
-  value: task-dev
+  value: dev
   name: DEV_PROJECT
   required: true
-- displayName: TEST project name
-  value: task-test
-  name: TEST_PROJECT
-  required: true
-- displayName: PROD project name
-  value: task-prod
-  name: PROD_PROJECT
+- displayName: STAGE project name
+  value: stage
+  name: STAGE_PROJECT
   required: true
 - displayName: Deploy Eclipse Che
   description: Deploy Eclipse Che in order to use as an online IDE for changing code in this demo
@@ -29,7 +25,7 @@ parameters:
   required: true
 - displayName: Ephemeral
   description: Use no persistent storage for Gogs and Nexus
-  value: "false"
+  value: "true"
   name: EPHEMERAL
   required: true
 - description: Webhook secret
@@ -90,10 +86,8 @@ objects:
         env:
         - name: DEV_PROJECT
           value: ${DEV_PROJECT}
-        - name: TEST_PROJECT
-          value: ${TEST_PROJECT}
-        - name: PROD_PROJECT
-          value: ${PROD_PROJECT}
+        - name: STAGE_PROJECT
+          value: ${STAGE_PROJECT}
         - name: ENABLE_QUAY
           value: ${ENABLE_QUAY}
         jenkinsfile: |-
@@ -118,7 +112,9 @@ objects:
               }
               stage('Code Analysis') {
                 steps {
-                  sh "sleep 10"
+                  script {
+                    sh "${mvnCmd} sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -DskipTests=true"
+                  }
                 }
               }
               stage('Archive App') {
@@ -149,42 +145,33 @@ objects:
                   }
                 }
               }
-              stage('Promote to TEST') {
-                steps {
-                  sh "sleep 10"
+              stage('Promote to STAGE?') {
+                agent {
+                  label 'skopeo'
                 }
-              }
-              stage('Deploy TEST') {
                 steps {
+                  timeout(time:15, unit:'MINUTES') {
+                      input message: "Promote to STAGE?", ok: "Promote"
+                  }
+
                   script {
                     openshift.withCluster() {
-                      openshift.withProject(env.TEST_PROJECT) {
-                        openshift.tag("${env.DEV_PROJECT}/tasks:latest", "${env.TEST_PROJECT}/tasks:test")
-                        openshift.selector("dc", "tasks").rollout().latest();
+                      if (env.ENABLE_QUAY.toBoolean()) {
+                        withCredentials([usernamePassword(credentialsId: "${openshift.project()}-quay-cicd-secret", usernameVariable: "QUAY_USER", passwordVariable: "QUAY_PWD")]) {
+                          sh "skopeo copy docker://quay.io/${QUAY_USERNAME}/${QUAY_REPOSITORY}:latest docker://quay.io/${QUAY_USERNAME}/${QUAY_REPOSITORY}:stage --src-creds \"$QUAY_USER:$QUAY_PWD\" --dest-creds \"$QUAY_USER:$QUAY_PWD\" --src-tls-verify=false --dest-tls-verify=false"
+                        }
+                      } else {
+                        openshift.tag("${env.DEV_PROJECT}/tasks:latest", "${env.STAGE_PROJECT}/tasks:stage")
                       }
                     }
                   }
                 }
               }
-              stage('Promote to PROD') {
+              stage('Deploy STAGE') {
                 steps {
-                  script {
-                   openshift.withCluster() {
-                     openshift.withProject(env.PROD_PROJECT) {
-                         openshift.tag("${env.DEV_PROJECT}/tasks:latest", "${env.PROD_PROJECT}/tasks:prod");
-                     }
-                   }
-                 }
-                 sh "sleep 300";
-                }
-              }
-              stage('Deploy Prod') {
-                steps {
-                
-                  
                   script {
                     openshift.withCluster() {
-                      openshift.withProject(env.Prod_PROJECT) {
+                      openshift.withProject(env.STAGE_PROJECT) {
                         openshift.selector("dc", "tasks").rollout().latest();
                       }
                     }
@@ -315,34 +302,22 @@ objects:
               oc delete is tasks -n ${DEV_PROJECT}
               oc secrets link default quay-cicd-secret --for=pull -n ${DEV_PROJECT}
               
-              # test
-              oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="${QUAY_USERNAME}" --docker-password="${QUAY_PASSWORD}" --docker-email=cicd@redhat.com -n ${TEST_PROJECT}
-              oc new-app --name=tasks --docker-image=quay.io/${QUAY_USERNAME}/${QUAY_REPOSITORY}:stage --allow-missing-images -n ${TEST_PROJECT}
-              oc set triggers dc tasks --remove-all -n ${TEST_PROJECT}
-              oc patch dc tasks -p '{"spec": {"template": {"spec": {"containers": [{"name": "tasks", "imagePullPolicy": "Always"}]}}}}' -n ${TEST_PROJECT}
-              oc delete is tasks -n ${TEST_PROJECT}
-              oc secrets link default quay-cicd-secret --for=pull -n ${TEST_PROJECT}
-              
-              # prod
-              oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="${QUAY_USERNAME}" --docker-password="${QUAY_PASSWORD}" --docker-email=cicd@redhat.com -n ${PROD_PROJECT}
-              oc new-app --name=tasks --docker-image=quay.io/${QUAY_USERNAME}/${QUAY_REPOSITORY}:prod --allow-missing-images -n ${PROD_PROJECT}
-              oc set triggers dc tasks --remove-all -n ${PROD_PROJECT}
-              oc patch dc tasks -p '{"spec": {"template": {"spec": {"containers": [{"name": "tasks", "imagePullPolicy": "Always"}]}}}}' -n ${PROD_PROJECT}
-              oc delete is tasks -n ${PROD_PROJECT}
-              oc secrets link default quay-cicd-secret --for=pull -n ${PROD_PROJECT}
+              # stage
+              oc create secret docker-registry quay-cicd-secret --docker-server=quay.io --docker-username="${QUAY_USERNAME}" --docker-password="${QUAY_PASSWORD}" --docker-email=cicd@redhat.com -n ${STAGE_PROJECT}
+              oc new-app --name=tasks --docker-image=quay.io/${QUAY_USERNAME}/${QUAY_REPOSITORY}:stage --allow-missing-images -n ${STAGE_PROJECT}
+              oc set triggers dc tasks --remove-all -n ${STAGE_PROJECT}
+              oc patch dc tasks -p '{"spec": {"template": {"spec": {"containers": [{"name": "tasks", "imagePullPolicy": "Always"}]}}}}' -n ${STAGE_PROJECT}
+              oc delete is tasks -n ${STAGE_PROJECT}
+              oc secrets link default quay-cicd-secret --for=pull -n ${STAGE_PROJECT}
             else
               # dev
               oc new-build --name=tasks --image-stream=wildfly:latest --binary=true -n ${DEV_PROJECT}
               oc new-app tasks:latest --allow-missing-images -n ${DEV_PROJECT}
               oc set triggers dc -l app=tasks --containers=tasks --from-image=tasks:latest --manual -n ${DEV_PROJECT}
               
-              # test
-              oc new-app tasks:test --allow-missing-images -n ${TEST_PROJECT}
-              oc set triggers dc -l app=tasks --containers=tasks --from-image=tasks:test --manual -n ${TEST_PROJECT}
-              
-              # prod
-              oc new-app tasks:prod --allow-missing-images -n ${PROD_PROJECT}
-              oc set triggers dc -l app=tasks --containers=tasks --from-image=tasks:prod --manual -n ${PROD_PROJECT}
+              # stage
+              oc new-app tasks:stage --allow-missing-images -n ${STAGE_PROJECT}
+              oc set triggers dc -l app=tasks --containers=tasks --from-image=tasks:stage --manual -n ${STAGE_PROJECT}
             fi
             
             # dev project
@@ -350,21 +325,15 @@ objects:
             oc expose svc/tasks -n ${DEV_PROJECT}
             oc set probe dc/tasks --readiness --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=30 --failure-threshold=10 --period-seconds=10 -n ${DEV_PROJECT}
             oc set probe dc/tasks --liveness  --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=180 --failure-threshold=10 --period-seconds=10 -n ${DEV_PROJECT}
-            oc rollout cancel dc/tasks -n ${TEST_PROJECT}
+            oc rollout cancel dc/tasks -n ${STAGE_PROJECT}
 
-            # test project
-            oc expose dc/tasks --port=8080 -n ${TEST_PROJECT}
-            oc expose svc/tasks -n ${TEST_PROJECT}
-            oc set probe dc/tasks --readiness --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=30 --failure-threshold=10 --period-seconds=10 -n ${TEST_PROJECT}
-            oc set probe dc/tasks --liveness  --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=180 --failure-threshold=10 --period-seconds=10 -n ${TEST_PROJECT}
+            # stage project
+            oc expose dc/tasks --port=8080 -n ${STAGE_PROJECT}
+            oc expose svc/tasks -n ${STAGE_PROJECT}
+            oc set probe dc/tasks --readiness --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=30 --failure-threshold=10 --period-seconds=10 -n ${STAGE_PROJECT}
+            oc set probe dc/tasks --liveness  --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=180 --failure-threshold=10 --period-seconds=10 -n ${STAGE_PROJECT}
             oc rollout cancel dc/tasks -n ${DEV_PROJECT}
 
-            # prod project
-            oc expose dc/tasks --port=8080 -n ${PROD_PROJECT}
-            oc expose svc/tasks -n ${PROD_PROJECT}
-            oc set probe dc/tasks --readiness --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=30 --failure-threshold=10 --period-seconds=10 -n ${PROD_PROJECT}
-            oc set probe dc/tasks --liveness  --get-url=http://:8080/ws/demo/healthcheck --initial-delay-seconds=180 --failure-threshold=10 --period-seconds=10 -n ${PROD_PROJECT}
-            oc rollout cancel dc/tasks -n ${DEV_PROJECT}
             # deploy gogs
             HOSTNAME=$(oc get route jenkins -o template --template='{{.spec.host}}' | sed "s/jenkins-${CICD_NAMESPACE}.//g")
             GOGS_HOSTNAME="gogs-$CICD_NAMESPACE.$HOSTNAME"
