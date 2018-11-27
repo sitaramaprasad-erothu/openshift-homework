@@ -7,10 +7,10 @@ oc new-project task-prod --display-name="Alpha-Tasks-Prod"
 oc new-project cicd --display-name="Alpha-Tasks-Build"
 
 ## Grant Jenkins Access to Projects
-oc policy add-role-to-group edit system:serviceaccount:cicd -n task-dev
-oc policy add-role-to-group edit system:serviceaccount:cicd -n task-test
-oc policy add-role-to-group edit system:serviceaccount:cicd -n task-prod
-oc policy add-role-to-group edit system:serviceaccount:cicd -n cicd
+oc policy add-role-to-group edit system:serviceaccount:cicd:jenkins -n task-dev
+oc policy add-role-to-group edit system:serviceaccount:cicd:jenkins -n task-test
+oc policy add-role-to-group edit system:serviceaccount:cicd:jenkins -n task-prod
+#oc policy add-role-to-group edit system:serviceaccount:cicd -n cicd
 
 
 #oc policy add-role-to-group admin alpha-corp -n task-dev
