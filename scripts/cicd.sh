@@ -24,7 +24,8 @@ oc adm pod-network join-projects --to=alpha-task-build alpha-task-dev alpha-task
 
 oc project alpha-task-build
 
-oc new-app jenkins-persistent -n alpha-task-build
+#oc new-app jenkins-persistent -n alpha-task-build
+#oc new-app jenkins-ephemeral -n alpha-task-build
 
 # Deploy Demo
 oc new-app -n alpha-task-build -f /root/openshift-homework/yaml/cicd-template.yaml
