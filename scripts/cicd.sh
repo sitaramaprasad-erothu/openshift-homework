@@ -31,5 +31,5 @@ oc adm pod-network join-projects --to=cicd task-dev task-test task-prod >/dev/nu
 oc new-app -n cicd -f /root/openshift-homework/yaml/cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
-sleep 298
+sleep 300
 oc start-build tasks-pipeline
