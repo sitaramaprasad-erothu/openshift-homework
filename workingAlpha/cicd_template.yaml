@@ -1,25 +1,25 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: cicd
-  group: cicd
+  template: alpha-cicd
+  group: alpha-cicd
 metadata:
   annotations:
     iconClass: icon-jenkins
     tags: instant-app,jenkins,gogs,nexus,cicd
-  name: cicd
+  name: alpha-cicd
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials admin/admin\nNexus: admin/admin123\nGogs Git Server: gogs/gogs"
 parameters:
 - displayName: DEV project name
-  value: tasks-dev
+  value: alpha-tasks-dev
   name: DEV_PROJECT
   required: true
 - displayName: STAGE project name
-  value: tasks-test
+  value: alpha-tasks-test
   name: STAGE_PROJECT
   required: true
 - displayName: PROD project name
-  value: tasks-prod
+  value: alpha-tasks-prod
   name: PROD_PROJECT
   required: true
 - displayName: Ephemeral
