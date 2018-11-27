@@ -30,5 +30,5 @@ oc new-app jenkins-persistent -n alpha-task-build
 oc new-app -n alpha-task-build -f /root/openshift-homework/yaml/cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
-sleep 300
+sleep 298
 oc start-build tasks-pipeline
