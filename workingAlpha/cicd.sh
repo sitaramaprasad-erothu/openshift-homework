@@ -4,6 +4,11 @@ oc new-project alpha-task-test --display-name="Alpha-Tasks-TEST"
 oc new-project alpha-task-prod --display-name="Alpha-Tasks-Prod"
 oc new-project alpha-cicd-dev --display-name="Alpha-CICD-Task"
 
+oc label namespace alpha-task-dev client=alpha
+oc label namespace alpha-task-test client=alpha
+oc label namespace alpha-task-prod client=alpha
+oc label namespace alpha-cicd-dev client=alpha
+
 # Grant Jenkins Access to Projects
 oc policy add-role-to-group edit system:serviceaccounts:alpha-cicd-dev -n alpha-task-dev
 oc policy add-role-to-group edit system:serviceaccounts:alpha-cicd-dev -n alpha-task-test
