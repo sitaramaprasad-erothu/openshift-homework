@@ -142,59 +142,59 @@
     - name: Adding Label to User Group for Beta Group
       shell: oc label group/alpha-corp client=alpha
       
-- name: Applying Limits to Default Templet
-  hosts: localhost
-  tasks:
-    - name: Applying limits to default templet
-      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
+#- name: Applying Limits to Default Templet
+#  hosts: localhost
+#  tasks:
+#    - name: Applying limits to default templet
+#      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
 
-- name: Applying Network Policy
-  hosts: localhost
-  tasks:
-    - name: Apply network policy 
-      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
+#- name: Applying Network Policy
+#  hosts: localhost
+#  tasks:
+#    - name: Apply network policy 
+#      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
       
-- name: Create Project for Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Project for Alpha Corp
-      shell: oc adm new-project alpha-project --node-selector='client=alpha' --display-name='HR' --description='HR For Alpha'
+#- name: Create Project for Alpha Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Project for Alpha Corp
+#      shell: oc adm new-project alpha-project --node-selector='client=alpha' --display-name='HR' --description='HR For Alpha'
 
-- name: Label NameSpace for Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Label NameSpace for Alpha Corp
-      shell: oc label namespace alpha-project client=alpha
+#- name: Label NameSpace for Alpha Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Label NameSpace for Alpha Corp
+#      shell: oc label namespace alpha-project client=alpha
       
-- name: Create Project for Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Project for Beta Corp
-      shell: oc adm new-project beta-project --node-selector='client=beta' --display-name='Employee' --description='Employee For Beta'
+#- name: Create Project for Beta Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Project for Beta Corp
+#      shell: oc adm new-project beta-project --node-selector='client=beta' --display-name='Employee' --description='Employee For Beta'
 
-- name: Label NameSpace for Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Label NameSpace for Beta Corp
-      shell: oc label namespace beta-project client=beta
+#- name: Label NameSpace for Beta Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Label NameSpace for Beta Corp
+#      shell: oc label namespace beta-project client=beta
 
-- name: Add Alpha User As Admin to Project
-  hosts: localhost
-  tasks:
-    - name: Add Alpha User As Admin to Project
-      shell: oc adm policy add-role-to-group admin alpha-corp -n alpha-project      
+#- name: Add Alpha User As Admin to Project
+#  hosts: localhost
+#  tasks:
+#    - name: Add Alpha User As Admin to Project
+#      shell: oc adm policy add-role-to-group admin alpha-corp -n alpha-project      
 
-- name: Add Beta User As Admin to Project
-  hosts: localhost
-  tasks:
-    - name: Add Beta User As Admin to Project
-      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
+#- name: Add Beta User As Admin to Project
+#  hosts: localhost
+#  tasks:
+#    - name: Add Beta User As Admin to Project
+#      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
       
-- name: Switch to Alpha Corp User
-  hosts: localhost
-  tasks:
-    - name: Switch to Alpha Corp User
-      shell: oc login -u amy -p r3dh4t1!
+#- name: Switch to Alpha Corp User
+#  hosts: localhost
+#  tasks:
+#    - name: Switch to Alpha Corp User
+#      shell: oc login -u amy -p r3dh4t1!
       
 - name: Deploy App to Alpha Corp
   hosts: localhost
