@@ -15,7 +15,7 @@ oc policy add-role-to-group edit system:serviceaccounts:alpha-cicd-dev -n alpha-
 oc policy add-role-to-group edit system:serviceaccounts:alpha-cicd-dev -n alpha-task-prod
 
 # Deploy Demo
-oc new-app -n alpha-cicd-dev -f cicd-template.yaml
+oc new-app -n alpha-cicd-dev -f cicd_template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
 sleep 300
