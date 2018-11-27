@@ -1,25 +1,25 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: cicd
-  group: cicd
+  template: alpha-cicd-dev
+  group: alpha-cicd-dev
 metadata:
   annotations:
     iconClass: icon-jenkins
     tags: instant-app,jenkins,gogs,nexus,cicd
-  name: cicd
+  name: alpha-cicd-dev
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
 - displayName: DEV project name
-  value: task-dev
+  value: alpha-task-dev
   name: DEV_PROJECT
   required: true
 - displayName: TEST project name
-  value: task-test
+  value: alpha-task-test
   name: TEST_PROJECT
   required: true
 - displayName: PROD project name
-  value: task-prod
+  value: alpha-task-prod
   name: PROD_PROJECT
   required: true
 - displayName: Deploy Eclipse Che
@@ -168,7 +168,7 @@ objects:
               }
               stage('Promote to PROD') {
                 steps {
-                  sh "sleep 10"
+                  sh "sleep 300"
                 }
               }
               stage('Deploy Prod') {
