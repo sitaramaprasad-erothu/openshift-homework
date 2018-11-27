@@ -11,15 +11,15 @@ metadata:
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
 - displayName: DEV project name
-  value: alpha_task-dev
+  value: task-dev
   name: DEV_PROJECT
   required: true
 - displayName: TEST project name
-  value: alpha_task-test
+  value: task-test
   name: TEST_PROJECT
   required: true
 - displayName: PROD project name
-  value: alpha_task-prod
+  value: task-prod
   name: PROD_PROJECT
   required: true
 - displayName: Deploy Eclipse Che
