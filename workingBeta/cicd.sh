@@ -5,9 +5,9 @@ oc new-project beta-task-prod --display-name="Beta-Tasks - Prod"
 oc new-project beta-cicd --display-name="CI/CD"
 
 # Grant Jenkins Access to Projects
-oc policy add-role-to-group edit system:serviceaccounts:cicd -n beta-task-dev
-oc policy add-role-to-group edit system:serviceaccounts:cicd -n beta-task-test
-oc policy add-role-to-group edit system:serviceaccounts:cicd -n beta-task-prod
+oc policy add-role-to-group edit system:serviceaccounts:beta-cicd -n beta-task-dev
+oc policy add-role-to-group edit system:serviceaccounts:beta-cicd -n beta-task-test
+oc policy add-role-to-group edit system:serviceaccounts:beta-cicd -n beta-task-prod
 
 # Deploy Demo
 oc new-app -n beta-cicd -f cicd-template.yaml
