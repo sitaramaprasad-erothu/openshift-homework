@@ -27,11 +27,11 @@ oc project cicd
 #oc adm pod-network join-projects --to=cicd task-dev task-test task-prod >/dev/null 2>&1
 
 #oc login -u amy -p r3dh4t1!
-oc project task-build
+#oc project task-build
 
 
 #oc new-app jenkins-persistent -n cicd
-oc new-app jenkins-ephemeral -n alpha-task-build
+#oc new-app jenkins-ephemeral -n alpha-task-build
 
 
 # Deploy Demo
