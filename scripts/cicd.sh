@@ -13,25 +13,22 @@ oc policy add-role-to-group edit system:serviceaccount:cicd -n task-prod
 oc policy add-role-to-group edit system:serviceaccount:cicd -n cicd
 
 
-oc policy add-role-to-group admin alpha-corp -n task-dev
-oc policy add-role-to-group admin alpha-corp -n task-test
-oc policy add-role-to-group admin alpha-corp -n task-prod
-oc policy add-role-to-group admin alpha-corp -n cicd
+#oc policy add-role-to-group admin alpha-corp -n task-dev
+#oc policy add-role-to-group admin alpha-corp -n task-test
+#oc policy add-role-to-group admin alpha-corp -n task-prod
+#oc policy add-role-to-group admin alpha-corp -n cicd
 
-<<<<<<< HEAD
 oc adm pod-network join-projects --to=cicd task-dev task-test task-prod >/dev/null 2>&1
 
 #oc login -u amy -p r3dh4t1!
 
-#oc project cicd
-=======
-oc policy add-role-to-group 
+oc project cicd
 
-oc adm pod-network join-projects --to=$comp-task-build $comp-task-dev $comp-task-test $comp-task-prod >/dev/null 2>&1
+#oc adm pod-network join-projects --to=cicd task-dev task-test task-prod >/dev/null 2>&1
 
-oc login -u amy -p r3dh4t1!
-oc project $comp-task-build
->>>>>>> parent of 0f210da... cicd
+#oc login -u amy -p r3dh4t1!
+oc project task-build
+
 
 #oc new-app jenkins-persistent -n cicd
 oc new-app jenkins-ephemeral -n alpha-task-build
