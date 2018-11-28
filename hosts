@@ -123,6 +123,14 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 
 openshift_cluster_monitoring_operator_install=true
 
+<<<<<<< HEAD
+=======
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+
+>>>>>>> parent of 517b69e... kibaba
 ########################
 # Cluster Metrics
 ########################
