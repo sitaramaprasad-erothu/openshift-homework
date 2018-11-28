@@ -17,5 +17,5 @@ oc get route
 #Open URL to verify
 curl http://nodejs-mongo-persistent-smoke-test.apps.$GUID.example.opentlc.com
 #Delete the Smoke Test Project
-oc delete project smoke-test
+#oc delete project smoke-test
 
