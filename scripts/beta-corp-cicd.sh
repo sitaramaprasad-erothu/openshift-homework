@@ -7,6 +7,12 @@ oc adm new-project beta-task-test --node-selector='client=beta'
 oc adm new-project beta-task-prod --node-selector='client=beta'
 oc adm new-project beta-cicd-dev --node-selector='client=beta'
 
+oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-task-dev
+oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-task-test
+oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-task-prod
+oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-cicd-dev
+
+
 # Grant Jenkins Access to Projects
 oc policy add-role-to-group edit system:serviceaccounts:beta-cicd-dev -n beta-task-dev
 sleep 10
