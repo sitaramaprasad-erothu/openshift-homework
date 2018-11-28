@@ -4,6 +4,8 @@
 #oc new-project beta-task-prod --display-name="Beta-Tasks - Prod"
 #oc new-project beta-cicd --display-name="Beta-CI/CD"
 
+
+
 oc adm new-project alpha-task-dev --node-selector='client=alpha'
 oc adm new-project alpha-task-test --node-selector='client=alpha'
 oc adm new-project alpha-task-prod --node-selector='client=alpha'
@@ -32,4 +34,4 @@ oc new-app -n alpha-cicd-dev -f cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
 sleep 300
-oc start-build alpha-cicd-dev-tasks-pipeline
+oc start-build tasks-pipeline
