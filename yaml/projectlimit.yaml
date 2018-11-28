@@ -6,23 +6,24 @@ spec:
   limits:
     - type: "Pod"
       max:
-        cpu: "3" 
-        memory: "3Gi" 
+        cpu: "2" 
+        memory: "2Gi" 
       min:
-        cpu: "800m" 
-        memory: "1280Mi" 
+        cpu: "1" 
+        memory: "1Gi" 
     - type: "Container"
       max:
         cpu: "2" 
-        memory: "3Gi" 
+        memory: "2Gi" 
       min:
-        cpu: "100m" 
+        cpu: "1" 
         memory: "4Mi" 
       default:
-        cpu: "700m" 
-        memory: "1280Mi" 
+        cpu: "1" 
+        memory: "1Gi" 
       defaultRequest:
-        cpu: "700m" 
-        memory: "1280Mi" 
+#        cpu: "700m"
+        cpu: "1" 
+        memory: "1Gi" 
       maxLimitRequestRatio:
         cpu: "10" 
