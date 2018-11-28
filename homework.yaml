@@ -9,25 +9,25 @@
   hosts: localhost
   tasks:
     - name: Backup of existing Inventory Hosts File
-      script: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y"`"
+      shell: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y"`"
 
 - name: Backup of existing Password File
   hosts: localhost
   tasks:
     - name: Backup of existing Password File
-      script: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y"`"
+      shell: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y"`"
 
 - name: copy new  password File
   hosts: localhost
   tasks:
     - name: copy new  password File
-      script: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
+      shell: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
       
 - name: Copy Inventory Hosts File
   hosts: localhost
   tasks:
     - name: Generate Inventory script
-      script: cp -f /root/openshift-homework/hosts /etc/ansible/hosts
+      shell: cp -f /root/openshift-homework/hosts /etc/ansible/hosts
 
 - name: Generate Inventory Hosts File
   hosts: localhost
@@ -201,14 +201,14 @@
   hosts: localhost
   tasks:
     - name: Deploy App to Alpha Corp
-      shell: /root/openshift-homework/scripts/alpha-corp-cicd.sh
+      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
 
      
 - name: Deploy App to Alpha Corp
   hosts: localhost
   tasks:
     - name: Deploy App to Alpha Corp
-      shell: /root/openshift-homework/scripts/beta-corp-cicd.sh
+      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
 
 #------------------------------------------      
 #- name: Jenkins Setup
