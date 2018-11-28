@@ -122,45 +122,7 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 ###########################################################################
 
 openshift_cluster_monitoring_operator_install=true
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 517b69e... kibaba
-openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
-openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
-openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
-openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
-
-<<<<<<< HEAD
->>>>>>> parent of 517b69e... kibaba
-=======
->>>>>>> parent of 517b69e... kibaba
-########################
-# Cluster Metrics
-########################
-
-openshift_metrics_install_metrics=true
-openshift_metrics_cassandra_storage_type=dynamic
-Overrides the openshift_metrics_cassandra_storage_type=dynamic
-#openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
-
-#openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra": "true"}
-
-openshift_metrics_hawkular_nodeselector={'env':'infra'}
-openshift_metrics_cassandra_nodeselector={'env':'infra'}
-openshift_metrics_heapster_nodeselector={'env':'infra'}
-
-=======
-
-=======
-
->>>>>>> parent of 517b69e... kibaba
 openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
 openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
 openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
@@ -183,10 +145,27 @@ openshift_metrics_hawkular_nodeselector={'env':'infra'}
 openshift_metrics_cassandra_nodeselector={'env':'infra'}
 openshift_metrics_heapster_nodeselector={'env':'infra'}
 
-<<<<<<< HEAD
->>>>>>> parent of 517b69e... kibaba
-=======
->>>>>>> parent of 517b69e... kibaba
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+
+########################
+# Cluster Metrics
+########################
+
+openshift_metrics_install_metrics=true
+openshift_metrics_cassandra_storage_type=dynamic
+Overrides the openshift_metrics_cassandra_storage_type=dynamic
+#openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
+
+#openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra": "true"}
+#openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra": "true"}
+#openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra": "true"}
+
+openshift_metrics_hawkular_nodeselector={'env':'infra'}
+openshift_metrics_cassandra_nodeselector={'env':'infra'}
+openshift_metrics_heapster_nodeselector={'env':'infra'}
 
 openshift_metrics_storage_kind=nfs
 openshift_metrics_storage_access_modes=['ReadWriteOnce']
