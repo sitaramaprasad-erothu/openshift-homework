@@ -1,8 +1,6 @@
 # Create Projects
-#oc new-project beta-task-dev --display-name="Beta-Tasks - Dev"
-#oc new-project beta-task-test --display-name="Beta-Tasks - TEST"
-#oc new-project beta-task-prod --display-name="Beta-Tasks - Prod"
-#oc new-project beta-cicd --display-name="Beta-CI/CD"
+
+oc login -u system:admin
 
 oc adm new-project beta-task-dev --node-selector='client=beta'
 oc adm new-project beta-task-test --node-selector='client=beta'
@@ -16,9 +14,19 @@ oc policy add-role-to-group edit system:serviceaccounts:beta-cicd-dev -n beta-ta
 sleep 10
 oc policy add-role-to-group edit system:serviceaccounts:beta-cicd-dev -n beta-task-prod
 sleep 10
+
+oc adm policy add-role-to-group admin beta-corp -n beta-task-dev
+oc adm policy add-role-to-group admin beta-corp -n beta-task-test
+oc adm policy add-role-to-group admin beta-corp -n beta-task-prod
+oc adm policy add-role-to-group admin beta-corp -n beta-cicd-dev
+
+oc login -u brian -p r3dh4t1!
+
+oc project beta-cicd-dev
+
 oc new-app jenkins-persistent
 # Deploy Demo
-oc new-app -n beta-cicd-dev -f cicd-template.yaml
+oc new-app -n beta-cicd-dev -f /root/openshift-homework/yaml/beta-corp-cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
 sleep 300

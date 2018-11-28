@@ -4,6 +4,30 @@
   tasks:
     - name: Update script permissions
       shell: chmod +x /root/openshift-homework/scripts/*.sh
+      
+- name: Backup of existing Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Backup of existing Inventory Hosts File
+      script: mv /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y"`"
+
+- name: Backup of existing Password File
+  hosts: localhost
+  tasks:
+    - name: Backup of existing Password File
+      script: mv /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y"`"
+
+- name: copy new  password File
+  hosts: localhost
+  tasks:
+    - name: copy new  password File
+      script: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
+      
+- name: Copy Inventory Hosts File
+  hosts: localhost
+  tasks:
+    - name: Generate Inventory script
+      script: cp -f /root/openshift-homework/hosts /etc/ansible/hosts
 
 - name: Generate Inventory Hosts File
   hosts: localhost
@@ -142,6 +166,24 @@
     - name: Adding Label to User Group for Beta Group
       shell: oc label group/alpha-corp client=alpha
       
+- name: Removing Self Provisning from Users
+  hosts: localhost
+  tasks:
+    - name: Removing Self Provisning from Users
+      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+      
+- name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io alpha-corp
+
+- name: Adding role processedtemplates.template.openshift.io to Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
+      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
+      
 #- name: Applying Limits to Default Templet
 #  hosts: localhost
 #  tasks:
@@ -154,65 +196,20 @@
 #    - name: Apply network policy 
 #      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
       
-#- name: Create Project for Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Project for Alpha Corp
-#      shell: oc adm new-project alpha-project --node-selector='client=alpha' --display-name='HR' --description='HR For Alpha'
-
-#- name: Label NameSpace for Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Label NameSpace for Alpha Corp
-#      shell: oc label namespace alpha-project client=alpha
-      
-#- name: Create Project for Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Project for Beta Corp
-#      shell: oc adm new-project beta-project --node-selector='client=beta' --display-name='Employee' --description='Employee For Beta'
-
-#- name: Label NameSpace for Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Label NameSpace for Beta Corp
-#      shell: oc label namespace beta-project client=beta
-
-#- name: Add Alpha User As Admin to Project
-#  hosts: localhost
-#  tasks:
-#    - name: Add Alpha User As Admin to Project
-#      shell: oc adm policy add-role-to-group admin alpha-corp -n alpha-project      
-
-#- name: Add Beta User As Admin to Project
-#  hosts: localhost
-#  tasks:
-#    - name: Add Beta User As Admin to Project
-#      shell: oc adm policy add-role-to-group admin beta-corp -n beta-project      
-      
-#- name: Switch to Alpha Corp User
-#  hosts: localhost
-#  tasks:
-#    - name: Switch to Alpha Corp User
-#      shell: oc login -u amy -p r3dh4t1!
       
 - name: Deploy App to Alpha Corp
   hosts: localhost
   tasks:
     - name: Deploy App to Alpha Corp
-      shell: /root/openshift-homework/scripts/cicd.sh
+      shell: /root/openshift-homework/scripts/alpha-corp-cicd.sh
 
-#- name: Switch to Beta Corp User
-#  hosts: localhost
-#  tasks:
-#    - name: Switch to Beta Corp User
-#      shell: oc login -u amy -p r3dh4t1!
-#      
-#- name: Deploy App to Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      shell: ansible-playbook -i /root/openshift-homework/container-pipelines/basic-spring-boot/.applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
+     
+- name: Deploy App to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      shell: /root/openshift-homework/scripts/beta-corp-cicd.sh
+
 #------------------------------------------      
 #- name: Jenkins Setup
 #  hosts: localhost
