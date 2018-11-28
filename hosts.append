@@ -121,39 +121,53 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 ### OpenShift Metrics and Logging Vars
 ###########################################################################
 
+#########################
+# Prometheus Metrics
+#########################
+
+openshift_hosted_prometheus_deploy=true
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={'env':'infra'}
+
 openshift_cluster_monitoring_operator_install=true
+
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
 
 ########################
 # Cluster Metrics
 ########################
 
 openshift_metrics_install_metrics=true
-openshift_metrics_cassandra_storage_type=dynamic
-Overrides the openshift_metrics_cassandra_storage_type=dynamic
-#openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
 
-#openshift_metrics_hawkular_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_metrics_cassandra_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_metrics_heapster_nodeselector={"node-role.kubernetes.io/infra": "true"}
+openshift_metrics_cassandra_storage_type=pvc
+#openshift_metrics_cassandra_pvc_storage_class_name='glusterfs-storage-block'
 
 openshift_metrics_hawkular_nodeselector={'env':'infra'}
 openshift_metrics_cassandra_nodeselector={'env':'infra'}
 openshift_metrics_heapster_nodeselector={'env':'infra'}
 
-
-openshift_metrics_storage_kind=nfs
-openshift_metrics_storage_access_modes=['ReadWriteOnce']
-openshift_metrics_storage_nfs_directory=/srv/nfs
-openshift_metrics_storage_nfs_options='*(rw,root_squash)'
-openshift_metrics_storage_volume_name=metrics
-openshift_metrics_storage_volume_size=10Gi
-openshift_metrics_storage_labels={'storage': 'metrics'}
-
 # Store Metrics for 2 days
 openshift_metrics_duration=2
 
+# Suggested Quotas and limits for Prometheus components:
+openshift_prometheus_memory_requests=2Gi
+openshift_prometheus_cpu_requests=750m
+openshift_prometheus_memory_limit=2Gi
+openshift_prometheus_cpu_limit=750m
+openshift_prometheus_alertmanager_memory_requests=300Mi
+openshift_prometheus_alertmanager_cpu_requests=200m
+openshift_prometheus_alertmanager_memory_limit=300Mi
+openshift_prometheus_alertmanager_cpu_limit=200m
+openshift_prometheus_alertbuffer_memory_requests=300Mi
+openshift_prometheus_alertbuffer_cpu_requests=200m
+openshift_prometheus_alertbuffer_memory_limit=300Mi
+openshift_prometheus_alertbuffer_cpu_limit=200m
+
+
 # Grafana
-#openshift_grafana_node_selector={"node-role.kubernetes.io/infra": "true"}
 openshift_grafana_node_selector={'env':'infra'}
 openshift_grafana_storage_type=pvc
 openshift_grafana_pvc_size=2Gi
@@ -168,142 +182,38 @@ openshift_logging_install_logging=true
 openshift_logging_install_eventrouter=true
 
 openshift_logging_es_pvc_dynamic=true
-openshift_logging_es_pvc_size=30Gi
-Overrides the openshift_logging_es_pvc_dynamic=true
+openshift_logging_es_pvc_size=20Gi
 #openshift_logging_es_pvc_storage_class_name='glusterfs-storage-block'
 openshift_logging_es_memory_limit=8Gi
 openshift_logging_es_cluster_size=1
 openshift_logging_curator_default_days=2
-
-#openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_logging_eventrouter_nodeselector={"node-role.kubernetes.io/infra": "true"}
 
 openshift_logging_kibana_nodeselector={'env':'infra'}
 openshift_logging_curator_nodeselector={'env':'infra'}
 openshift_logging_es_nodeselector={'env':'infra'}
 openshift_logging_eventrouter_nodeselector={'env':'infra'}
 
-openshift_logging_storage_kind=nfs
-openshift_logging_storage_access_modes=['ReadWriteOnce']
-openshift_logging_storage_nfs_directory=/srv/nfs
-openshift_logging_storage_nfs_options='*(rw,root_squash)'
-openshift_logging_storage_volume_name=logging-volume
-openshift_logging_storage_volume_size=10Gi
-openshift_logging_storage_labels={'storage': 'logging'}
-
-openshift_logging_kibana_hostname=kibana.apps.GUID.example.opentlc.com
-openshift_logging_es_cluster_size=1
-
-#openshift_logging_es_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_logging_kibana_nodeselector={"node-role.kubernetes.io/infra": "true"}
-#openshift_logging_curator_nodeselector={"node-role.kubernetes.io/infra": "true"}
-openshift_logging_es_nodeselector={'env':'infra'}
-openshift_logging_kibana_nodeselector={'env':'infra'}
-openshift_logging_curator_nodeselector={'env':'infra'}
-
-###########################################################################
-### OpenShift Prometheus Vars
-###########################################################################
-
-# Necessary because of a bug in the installer on 3.9
-openshift_prometheus_node_exporter_image_version=v3.9
-
-## Add Prometheus Metrics:
-openshift_hosted_prometheus_deploy=true
-#openshift_prometheus_node_selector={"node-role.kubernetes.io/infra": "true"}
-openshift_prometheus_node_selector={'env':'infra'}
-openshift_prometheus_namespace=openshift-metrics
-
-# Enable cluster monitoring
-openshift_cluster_monitoring_operator_install=true
-openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
-openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
-openshift_cluster_monitoring_operator_prometheus_storage_enabled=True
-openshift_cluster_monitoring_operator_alertmanager_storage_enabled=True
-#openshift_cluster_monitoring_operator_node_selector={"node-role.kubernetes.io/infra": "true"}
-openshift_cluster_monitoring_operator_node_selector={'env':'infra'}
-
-# Suggested Quotas and limits for Prometheus components:
-openshift_prometheus_memory_requests=2Gi
-openshift_prometheus_cpu_requests=750m
-openshift_prometheus_memory_limit=2Gi
-openshift_prometheus_cpu_limit=750m
-
-openshift_prometheus_alertmanager_memory_requests=300Mi
-openshift_prometheus_alertmanager_cpu_requests=200m
-openshift_prometheus_alertmanager_memory_limit=300Mi
-openshift_prometheus_alertmanager_cpu_limit=200m
-
-openshift_prometheus_alertbuffer_memory_requests=300Mi
-openshift_prometheus_alertbuffer_cpu_requests=200m
-openshift_prometheus_alertbuffer_memory_limit=300Mi
-openshift_prometheus_alertbuffer_cpu_limit=200m
-
-# Prometheus
-openshift_prometheus_storage_kind=nfs
-openshift_prometheus_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_storage_nfs_directory=/srv/nfs
-openshift_prometheus_storage_nfs_options='*(rw,root_squash)'
-openshift_prometheus_storage_volume_name=prometheus
-openshift_prometheus_storage_volume_size=10Gi
-openshift_prometheus_storage_labels={'storage': 'prometheus'}
-openshift_prometheus_storage_type='pvc'
-
-# For prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_kind=nfs
-openshift_prometheus_alertmanager_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_alertmanager_storage_nfs_directory=/srv/nfs
-openshift_prometheus_alertmanager_storage_nfs_options='*(rw,root_squash)'
-openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_volume_size=10Gi
-openshift_prometheus_alertmanager_storage_labels={'storage': 'prometheus-alertmanager'}
-openshift_prometheus_alertmanager_storage_type='pvc'
-
-# For prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_kind=nfs
-openshift_prometheus_alertbuffer_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_alertbuffer_storage_nfs_directory=/srv/nfs
-openshift_prometheus_alertbuffer_storage_nfs_options='*(rw,root_squash)'
-openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_volume_size=10Gi
-openshift_prometheus_alertbuffer_storage_labels={'storage': 'prometheus-alertbuffer'}
-openshift_prometheus_alertbuffer_storage_type='pvc'
-
-###########################################################################
-### OpenShift Project Management Vars
-###########################################################################
-
-# Configure additional projects
-openshift_additional_projects={'openshift-template-service-broker': {'default_node_selector': ''}}
-
 ###########################################################################
 ### OpenShift Router and Registry Vars
 ###########################################################################
 
 # default selectors for router and registry services
-#openshift_router_selector='node-role.kubernetes.io/infra=true'
-#openshift_registry_selector='node-role.kubernetes.io/infra=true'
-openshift_router_selector={'env':'infra'}
-openshift_registry_selector={'env':'infra'}
+# openshift_router_selector='node-role.kubernetes.io/infra=true'
+# openshift_registry_selector='node-role.kubernetes.io/infra=true'
 
 openshift_hosted_router_replicas=2
 
 # openshift_hosted_router_certificate={"certfile": "/path/to/router.crt", "keyfile": "/path/to/router.key", "cafile": "/path/to/router-ca.crt"}
 
-openshift_hosted_registry_replicas=1
+openshift_hosted_registry_replicas=2
 openshift_hosted_registry_pullthrough=true
 openshift_hosted_registry_acceptschema2=true
 openshift_hosted_registry_enforcequota=true
 
-
 openshift_hosted_registry_storage_kind=nfs
-openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
-openshift_hosted_registry_storage_nfs_directory=/srv/nfs
-openshift_hosted_registry_storage_nfs_options='*(rw,root_squash)'
-openshift_hosted_registry_storage_volume_name=registry
-openshift_hosted_registry_storage_volume_size=15Gi
+openshift_hosted_registry_storage_volume_size=10Gi
+openshift_hosted_registry_selector={'env':'infra'}
+
 
 ###########################################################################
 ### OpenShift Service Catalog Vars
@@ -319,14 +229,6 @@ openshift_template_service_broker_namespaces=['openshift']
 # default=true
 ansible_service_broker_install=true
 ansible_service_broker_local_registry_whitelist=['.*-apb$']
-
-openshift_hosted_etcd_storage_kind=nfs
-openshift_hosted_etcd_storage_nfs_options="*(rw,root_squash,sync,no_wdelay)"
-openshift_hosted_etcd_storage_nfs_directory=/srv/nfs
-openshift_hosted_etcd_storage_labels={'storage': 'etcd'}
-openshift_hosted_etcd_storage_volume_name=etcd-volume
-openshift_hosted_etcd_storage_access_modes=['ReadWriteOnce']
-openshift_hosted_etcd_storage_volume_size=2G
 
 ###########################################################################
 ### OpenShift Hosts
