@@ -22,4 +22,4 @@ oc new-app -n beta-cicd-dev -f cicd-template.yaml
 
 # Sleep for 5 minutes and then Start Pipeline
 sleep 300
-oc start-build beta-tasks-pipeline
+oc start-build beta-cicd-dev-tasks-pipeline
