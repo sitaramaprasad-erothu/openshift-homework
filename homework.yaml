@@ -9,13 +9,13 @@
   hosts: localhost
   tasks:
     - name: Backup of existing Inventory Hosts File
-      script: mv /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y"`"
+      script: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y"`"
 
 - name: Backup of existing Password File
   hosts: localhost
   tasks:
     - name: Backup of existing Password File
-      script: mv /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y"`"
+      script: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y"`"
 
 - name: copy new  password File
   hosts: localhost

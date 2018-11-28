@@ -7,10 +7,10 @@ oc adm new-project alpha-task-test --node-selector='client=alpha'
 oc adm new-project alpha-task-prod --node-selector='client=alpha'
 oc adm new-project alpha-cicd-dev --node-selector='client=alpha'
 
-oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-dev
-oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-test
-oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-prod
-oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-cicd-dev
+#oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-dev
+#oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-test
+#oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-task-prod
+#oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n alpha-cicd-dev
 
 
 # Grant Jenkins Access to Projects
