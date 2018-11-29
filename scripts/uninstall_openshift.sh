@@ -8,3 +8,5 @@ ansible nodes -a "rm -rf /etc/origin"
 
 #Remove any data from the NFS Server
 ansible nfs -a "rm -rf /srv/nfs/*"
+
+rm -rf /etc/origin
