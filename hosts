@@ -137,7 +137,7 @@ openshift_prometheus_storage_nfs_directory=/srv/nfs
 openshift_prometheus_storage_nfs_options='*(rw,root_squash)'
 openshift_prometheus_storage_volume_name=prometheus
 openshift_prometheus_storage_volume_size=10Gi
-openshift_prometheus_storage_labels={'storage': 'prometheus'}
+openshift_prometheus_storage_labels={'storage':'prometheus'}
 openshift_prometheus_storage_type='pvc'
 
 # For prometheus-alertmanager
@@ -157,16 +157,18 @@ openshift_prometheus_alertbuffer_storage_nfs_directory=/srv/nfs
 openshift_prometheus_alertbuffer_storage_nfs_options='*(rw,root_squash)'
 openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
 openshift_prometheus_alertbuffer_storage_volume_size=10Gi
-openshift_prometheus_alertbuffer_storage_labels={'storage': 'prometheus-alertbuffer'}
+openshift_prometheus_alertbuffer_storage_labels={'storage':'prometheus-alertbuffer'}
 openshift_prometheus_alertbuffer_storage_type='pvc'
 
 # Enable cluster monitoring
 
 openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
 openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
-openshift_cluster_monitoring_operator_prometheus_storage_enabled=True
-openshift_cluster_monitoring_operator_alertmanager_storage_enabled=True
-#openshift_cluster_monitoring_operator_node_selector='env=infra'
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+#openshift_cluster_monitoring_operator_node_selector={'env=infra'}
+openshift_cluster_monitoring_operator_node_selector='node-role.kubernetes.io/infra=true'
+
 
 ########################
 # Cluster Metrics
@@ -180,7 +182,7 @@ openshift_metrics_storage_nfs_directory=/srv/nfs
 openshift_metrics_storage_nfs_options='*(rw,root_squash)'
 openshift_metrics_storage_volume_name=metrics
 openshift_metrics_storage_volume_size=10Gi
-openshift_metrics_storage_labels={'storage': 'metrics'}
+openshift_metrics_storage_labels={'storage':'metrics'}
 #openshift_metrics_cassandra_pvc_storage_class_name=
 
 
