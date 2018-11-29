@@ -167,8 +167,8 @@ openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
 openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
 openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
 openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
-#openshift_cluster_monitoring_operator_node_selector={'env=infra'}
-openshift_cluster_monitoring_operator_node_selector='node-role.kubernetes.io/infra=true'
+openshift_cluster_monitoring_operator_node_selector={'env=infra'}
+#openshift_cluster_monitoring_operator_node_selector='node-role.kubernetes.io/infra=true'
 
 
 ########################
