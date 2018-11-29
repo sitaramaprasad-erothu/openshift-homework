@@ -181,7 +181,7 @@ openshift_metrics_storage_nfs_options='*(rw,root_squash)'
 openshift_metrics_storage_volume_name=metrics
 openshift_metrics_storage_volume_size=10Gi
 openshift_metrics_storage_labels={'storage': 'metrics'}
-openshift_metrics_cassandra_pvc_storage_class_name=
+#openshift_metrics_cassandra_pvc_storage_class_name=
 
 
 openshift_metrics_hawkular_nodeselector='env=infra'
@@ -229,10 +229,10 @@ openshift_logging_storage_kind=nfs
 openshift_logging_storage_access_modes=['ReadWriteOnce']
 openshift_logging_storage_nfs_directory=/srv/nfs
 openshift_logging_storage_nfs_options='*(rw,root_squash)'
-openshift_logging_storage_volume_name=logging-volume
+openshift_logging_storage_volume_name=logging
 openshift_logging_storage_volume_size=10Gi
-openshift_logging_storage_labels={'storage': 'logging'}
-openshift_logging_es_pvc_storage_class_name=
+openshift_logging_storage_labels={'storage':'logging'}
+#openshift_logging_es_pvc_storage_class_name=
 openshift_logging_es_memory_limit=8Gi
 openshift_logging_es_cluster_size=1
 openshift_logging_curator_default_days=2
@@ -285,7 +285,7 @@ ansible_service_broker_local_registry_whitelist=['.*-apb$']
 openshift_hosted_etcd_storage_kind=nfs
 openshift_hosted_etcd_storage_nfs_options="*(rw,root_squash,sync,no_wdelay)"
 openshift_hosted_etcd_storage_nfs_directory=/srv/nfs
-openshift_hosted_etcd_storage_labels={'storage': 'etcd'}
+openshift_hosted_etcd_storage_labels={'storage':'etcd'}
 openshift_hosted_etcd_storage_volume_name=etcd-volume
 openshift_hosted_etcd_storage_access_modes=['ReadWriteOnce']
 openshift_hosted_etcd_storage_volume_size=2G
