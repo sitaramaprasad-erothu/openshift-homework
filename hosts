@@ -32,10 +32,11 @@ openshift_release="3.11.16"
 
 # Default node selectors
 osm_default_node_selector='client=common'
-openshift_hosted_infra_selector='env=infra'
+#openshift_hosted_infra_selector='env=infra'
+
 
 # Node Groups
-openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['35']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['35']}]}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['50']}]}]
+openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','env:infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['35']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['35']}]}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['50']}]}]
 # Configure node kubelet arguments. pods-per-core is valid in OpenShift Origin 1.3 or OpenShift Container Platform 3.3 and later. -> These  need to go into the above
 # openshift_node_kubelet_args={'pods-per-core': ['10'], 'max-pods': ['250'], 'image-gc-high-threshold': ['85'], 'image-gc-low-threshold': ['75']}
 
@@ -128,7 +129,7 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 
 openshift_hosted_prometheus_deploy=true
 openshift_prometheus_namespace=openshift-metrics
-openshift_prometheus_node_selector='env=infra'
+openshift_prometheus_node_selector={'env':'infra'}
 openshift_cluster_monitoring_operator_install=true
 
 # Prometheus
@@ -148,7 +149,7 @@ openshift_prometheus_alertmanager_storage_nfs_directory=/srv/nfs
 openshift_prometheus_alertmanager_storage_nfs_options='*(rw,root_squash)'
 openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
 openshift_prometheus_alertmanager_storage_volume_size=10Gi
-openshift_prometheus_alertmanager_storage_labels={'storage': 'prometheus-alertmanager'}
+openshift_prometheus_alertmanager_storage_labels={'storage':'prometheus-alertmanager'}
 openshift_prometheus_alertmanager_storage_type='pvc'
 
 # For prometheus-alertbuffer
@@ -168,7 +169,7 @@ openshift_cluster_monitoring_operator_alertmanager_storage_capacity=2Gi
 openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
 openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
 #openshift_cluster_monitoring_operator_node_selector={'env'='infra'}
-openshift_cluster_monitoring_operator_node_selector="env=infra"
+openshift_cluster_monitoring_operator_node_selector={'env':'infra'}
 #openshift_cluster_monitoring_operator_node_selector='node-role.kubernetes.io/infra=true'
 
 
@@ -188,9 +189,9 @@ openshift_metrics_storage_labels={'storage':'metrics'}
 #openshift_metrics_cassandra_pvc_storage_class_name=
 
 
-openshift_metrics_hawkular_nodeselector='env=infra'
-openshift_metrics_cassandra_nodeselector='env=infra'
-openshift_metrics_heapster_nodeselector='env=infra'
+openshift_metrics_hawkular_nodeselector={'env':'infra'}
+openshift_metrics_cassandra_nodeselector={'env':'infra'}
+openshift_metrics_heapster_nodeselector={'env':'infra'}
 
 # Store Metrics for 2 days
 openshift_metrics_duration=2
@@ -211,7 +212,7 @@ openshift_prometheus_alertbuffer_cpu_limit=200m
 
 
 # Grafana
-openshift_grafana_node_selector='env=infra'
+openshift_grafana_node_selector={'env':'infra'}
 openshift_grafana_storage_type=pvc
 openshift_grafana_pvc_size=2Gi
 openshift_grafana_node_exporter=true
@@ -241,10 +242,10 @@ openshift_logging_es_memory_limit=8Gi
 openshift_logging_es_cluster_size=1
 openshift_logging_curator_default_days=2
 
-openshift_logging_kibana_nodeselector='env=infra'
-openshift_logging_curator_nodeselector='env=infra'
-openshift_logging_es_nodeselector='env=infra'
-openshift_logging_eventrouter_nodeselector='env=infra'
+openshift_logging_kibana_nodeselector={'env':'infra'}
+openshift_logging_curator_nodeselector={'env':'infra'}
+openshift_logging_es_nodeselector={'env':'infra'}
+openshift_logging_eventrouter_nodeselector={'env':'infra'}
 
 ###########################################################################
 ### OpenShift Router and Registry Vars
