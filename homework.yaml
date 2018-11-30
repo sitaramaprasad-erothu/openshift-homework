@@ -143,47 +143,47 @@
       shell: oc login -u system:admin
 
 
-#- name: Creating Group For Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding user for Alpha Group
-#      shell: oc adm groups new alpha-corp andrew amy
+- name: Creating Group For Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding user for Alpha Group
+      shell: oc adm groups new alpha-corp andrew amy
 
-#- name: Creating Group For Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding user for Beta Group
-#      shell: oc adm groups new beta-corp brian betty
+- name: Creating Group For Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding user for Beta Group
+      shell: oc adm groups new beta-corp brian betty
 
-#- name: Adding Label to User Group Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding Label to User Group for Beta Group
-#      shell: oc label group/beta-corp client=beta
+- name: Adding Label to User Group Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Beta Group
+      shell: oc label group/beta-corp client=beta
 
-#- name: Adding Label to User Group Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding Label to User Group for Beta Group
-#      shell: oc label group/alpha-corp client=alpha
+- name: Adding Label to User Group Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Beta Group
+      shell: oc label group/alpha-corp client=alpha
       
-#- name: Removing Self Provisning from Users
-#  hosts: localhost
-#  tasks:
-#    - name: Removing Self Provisning from Users
-#      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+- name: Removing Self Provisning from Users
+  hosts: localhost
+  tasks:
+    - name: Removing Self Provisning from Users
+      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
       
-#- name: Adding role processedtemplates.template.openshift.io to Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
-#      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io alpha-corp
+- name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io alpha-corp
 
-#- name: Adding role processedtemplates.template.openshift.io to Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
-#      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
+- name: Adding role processedtemplates.template.openshift.io to Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
+      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
       
 #- name: Applying Limits to Default Templet
 #  hosts: localhost
@@ -198,18 +198,18 @@
 #      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
       
       
-#- name: Deploy App to Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
+- name: Deploy App to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
 
      
-#- name: Deploy App to Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
+- name: Deploy App to Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
 
 #------------------------------------------      
 #- name: Jenkins Setup

@@ -16,18 +16,12 @@ containerized=false
 
 #openshift_disable_check="disk_availability"
 
-######################
-# Added for Homework
-######################
 openshift_disable_check='disk_availability,memory_availability,docker_image_availability'
 
 # Default node selectors
 osm_default_node_selector='client=common'
 openshift_hosted_infra_selector='env=infra'
 
-######################
-# Added for Homework
-######################
 # OpenShift Version:
 # If you modify the openshift_image_tag or the openshift_pkg_version variables after the cluster is set up, then an upgrade can be triggered, resulting in downtime.
 # If openshift_image_tag is set, its value is used for all hosts in system container environments, even those that have another version installed. If
@@ -38,55 +32,31 @@ openshift_image_tag=v3.11.16
 openshift_pkg_version=-3.11.16
 openshift_release=3.11.16
 
-######################
-# Added for Homework
-######################
 # Node Groups
 openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-common', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}]
 
-######################
-# Added for Homework
-######################
 # Configure logrotate scripts
 # See: https://github.com/nickhammond/ansible-logrotate
 logrotate_scripts=[{"name": "syslog", "path": "/var/log/cron\n/var/log/maillog\n/var/log/messages\n/var/log/secure\n/var/log/spooler\n", "options": ["daily", "rotate 7","size 500M", "compress", "sharedscripts", "missingok"], "scripts": {"postrotate": "/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true"}}]
 
-######################
-# Added for Homework
-######################
 # Deploy Operator Lifecycle Manager Tech Preview
 openshift_enable_olm=true
 
 
-######################
-# Added for Homework
-######################
 ###########################################################################
 ### OpenShift Registries Locations
 ###########################################################################
 
 oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
-#oreg_auth_user=11009103|dallasoct2018
-######################
-# Added for Homework
-######################
-oreg_auth_user=12083267|prolifics
 
-#oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI4MzAyMTUzMTVhYjA0MWMzYmIyNGU3YWM1M2Q4ZWM5YSJ9.h7NPfvFihkalkGZF8o_XJYejrD-fv-li6ObdtPnb0FMZaSIG8wjK9JVjgaKcg5QU6kIx1cny8S4R29_i741yxCCranntH_ixGm1ReW8fhFmzC9_Am71hXaDgojeAXtFxT7hD-Mi-71GTOmHk73Y1YGZE39cVmIrsxET4KKxxHkBF5Txk9bAG6TBhxPW5Y3l1g_c0Dr0YQ2CgN4AD0i3oSnPm1QAlbccgIlLD2no8lbjishejjvdM67GLbl_o1NhWdPOfIL2eHK2gufxWZEkrJdnvSrshzX5uRVLKVN7YH0WbJSFYg6X7jeSVi_y_auO7f32yBzYnS4Dj4De8TLlFeRe1Zvq2qs9InNf7xH8o7bOrD0_fjpA2CIdnZdry6V63CZOcw_KtmUbg1bg4Zi1h_X-T3LKV5pHMSDGKZp2271UXZfylEW57DiCUGzbzAhR8rqWRGq0bbR0Xzdeps_c-U81Aj7__rsXJlgE5BOvBW4rJZiB4jEFIplEhXWRs2pQ_mEDB8zwPe_DB74SYZ0dcYsqulikuntSvQ9HEPBmm3IxGN1da3AncNVu2BOsmShocuoLNmxEENMo2KkLratFfBgj2dHKzITamu_PcEXA9-tgJH7ix5u1ZLCKWl5EPsnvbfCtDDpDeivPWLtFc_TH1d9GiBdjDvIe10yxurcEuox8
-######################
-# Added for Homework
-######################
-oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJmYzY1ZjlkNDc5NTI0YTk0OWNlMWNkZjdiMDdjODJmMSJ9.qIHaxO0kSOkODDxMeUPNDqeoFJJU9rJMstVsNCn4QCNJm1XBXZPBrj6euVCliY0U8CVcu6qz1BajTykeH0B6JMBpHomEcrzyUi9C4U6Yb7Wg5BgwqRUp74T9LK6qHp-LDiTVk-gbqU-Zdfb7qIZpO8PJTKLQz02btuNHVJ_8S3G-FtoB0BfuNC7o0fFB6dpRzN9ovOBSRemyWboVTigk1NmiMGQPJaGTq0TYVFsO6UnOBuCe1Fr2Felr6PEdpSnffpIqlDFwQ_yBlATfWyQ4tYI9fMn9HJw0BArkbfnWMvWO1kh_s-b0uTUXQ1xYxH2oioPw3QRMNVD2A-lVCdfNovlEPG1_FCyHhiGQCH8cGvLCxGT4-hwuqkKPhR1EW2YYfNk1VX6CCQ3PvlnKl7bfferNoa4fvzhFDPH7Ui0IdhzZ-6PeEo3oD1hxzByMVUgWtu-ZZVTqQUYCkQCurXPOyyhGw5C2ZLXf_em6-eTKIMV5PHIX320WX_NQisrCDUkQKJtKWj_-RCj3ane9GpQE4TjmBrOaCMdAeXbDsljbiz11EoUPGcjJt90HGG1rLyU-pe_mXMjdoz06_3m1QqsVB7Zt53lbUGC2k8RmTAoNt8CGGRPtCED0EhVgaCR5FLG6HwpvAbkrLXZqE1OD7yXD2aiv6uF4DKM95fbRcnuy1nk
+oreg_auth_user=12083267|sushilregistory
+
+oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjY2FkOGNiNmM3YTQ0MDBjOTBmYjdmYWIxNDYxODYzYyJ9.PkncEOAzuneV6RPHDPLOk9CP2mrTcD3PY8YXWFpf5HYSO6G7kwTWnQ79zi_ZnXVXCoz_TqHv3x2v8C4dHTW51fC-B2cliOFtQRy8Y6Ly_ti8gAe0dk5FjHHdo1IyTCp-BZoBgPzp7HVcpemsynGp73flr5YC-eOCYIKivPK2IrPItDOvsfOHUUlG3VR2tJqGCoT46AyUvW8arS0ArJ0W2MmB7pTDCsCb7VhScGoWEsodgjXEjvF8zdcEz4fO8RiIqh_BX1cfo5yR4j1V4J9WaGnVcPwBsXl0j_zF5u9uNZRG3-k_xHhyc_pacH9TithJWBF510cqmuDWWOjk5cyhSfh5ixgE7G4NqV2mMFqCkJrXFbD2_Z9MhQwRWwNmujH5ZjJ14ayFQrRDCpsdlZ91jAKiWJ6YjZqp2LfN5rVi3d6ELDz1GtbLeWVACuFDFFkbjY1cvtKL7Nh2tAcy8JoyrZT-gG2tPUt-DRg09_G7j-zdYc3Y0UA31PIVtB7Iigefzw_gM8jCtHe5-TpBd4fRhpwo0BFDALg8a-EZa7ziuSQLP-SkmjrIjbgXIJwF5lp4pBDSxn4S47CE34qIcMe_yZNywolmdH6181wRihkLefETZEA-A-eIK4e4QOSc4dHegOFtpcobGgrexnuSRlSgA7xZnSXHt1B3jU6rE8fuhZg
 
 # For Operator Framework Images
-######################
-# Added for Homework
-######################
-openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'12083267|prolifics','password':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJmYzY1ZjlkNDc5NTI0YTk0OWNlMWNkZjdiMDdjODJmMSJ9.qIHaxO0kSOkODDxMeUPNDqeoFJJU9rJMstVsNCn4QCNJm1XBXZPBrj6euVCliY0U8CVcu6qz1BajTykeH0B6JMBpHomEcrzyUi9C4U6Yb7Wg5BgwqRUp74T9LK6qHp-LDiTVk-gbqU-Zdfb7qIZpO8PJTKLQz02btuNHVJ_8S3G-FtoB0BfuNC7o0fFB6dpRzN9ovOBSRemyWboVTigk1NmiMGQPJaGTq0TYVFsO6UnOBuCe1Fr2Felr6PEdpSnffpIqlDFwQ_yBlATfWyQ4tYI9fMn9HJw0BArkbfnWMvWO1kh_s-b0uTUXQ1xYxH2oioPw3QRMNVD2A-lVCdfNovlEPG1_FCyHhiGQCH8cGvLCxGT4-hwuqkKPhR1EW2YYfNk1VX6CCQ3PvlnKl7bfferNoa4fvzhFDPH7Ui0IdhzZ-6PeEo3oD1hxzByMVUgWtu-ZZVTqQUYCkQCurXPOyyhGw5C2ZLXf_em6-eTKIMV5PHIX320WX_NQisrCDUkQKJtKWj_-RCj3ane9GpQE4TjmBrOaCMdAeXbDsljbiz11EoUPGcjJt90HGG1rLyU-pe_mXMjdoz06_3m1QqsVB7Zt53lbUGC2k8RmTAoNt8CGGRPtCED0EhVgaCR5FLG6HwpvAbkrLXZqE1OD7yXD2aiv6uF4DKM95fbRcnuy1nk','test_image':'mongodb/enterprise-operator:0.3.2'}]
 
-######################
-# Added for Homework
-######################
+openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'12083267|prolifics','password':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjY2FkOGNiNmM3YTQ0MDBjOTBmYjdmYWIxNDYxODYzYyJ9.PkncEOAzuneV6RPHDPLOk9CP2mrTcD3PY8YXWFpf5HYSO6G7kwTWnQ79zi_ZnXVXCoz_TqHv3x2v8C4dHTW51fC-B2cliOFtQRy8Y6Ly_ti8gAe0dk5FjHHdo1IyTCp-BZoBgPzp7HVcpemsynGp73flr5YC-eOCYIKivPK2IrPItDOvsfOHUUlG3VR2tJqGCoT46AyUvW8arS0ArJ0W2MmB7pTDCsCb7VhScGoWEsodgjXEjvF8zdcEz4fO8RiIqh_BX1cfo5yR4j1V4J9WaGnVcPwBsXl0j_zF5u9uNZRG3-k_xHhyc_pacH9TithJWBF510cqmuDWWOjk5cyhSfh5ixgE7G4NqV2mMFqCkJrXFbD2_Z9MhQwRWwNmujH5ZjJ14ayFQrRDCpsdlZ91jAKiWJ6YjZqp2LfN5rVi3d6ELDz1GtbLeWVACuFDFFkbjY1cvtKL7Nh2tAcy8JoyrZT-gG2tPUt-DRg09_G7j-zdYc3Y0UA31PIVtB7Iigefzw_gM8jCtHe5-TpBd4fRhpwo0BFDALg8a-EZa7ziuSQLP-SkmjrIjbgXIJwF5lp4pBDSxn4S47CE34qIcMe_yZNywolmdH6181wRihkLefETZEA-A-eIK4e4QOSc4dHegOFtpcobGgrexnuSRlSgA7xZnSXHt1B3jU6rE8fuhZg','test_image':'mongodb/enterprise-operator:0.3.2'}]
+
 openshift_examples_modify_imagestreams=true
 
 ###########################################################################
@@ -98,12 +68,6 @@ openshift_master_console_port=443
 
 openshift_master_cluster_method=native
 
-#openshift_master_cluster_hostname=????
-#openshift_master_cluster_public_hostname=????
-#openshift_master_default_subdomain=????
-######################
-# Added for Homework
-######################
 openshift_master_cluster_hostname=loadbalancer1.GUID.internal
 openshift_master_cluster_public_hostname=loadbalancer1.GUID.example.opentlc.com
 openshift_master_default_subdomain=apps.GUID.example.opentlc.com
@@ -121,9 +85,6 @@ openshift_enable_unsupported_configurations=True
 
 os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
 
-######################
-# Added for Homework
-######################
 osm_cluster_network_cidr=10.1.0.0/16
 openshift_portal_net=172.30.0.0/16
 
@@ -132,11 +93,7 @@ openshift_portal_net=172.30.0.0/16
 ###########################################################################
 
 # ldap or htpasswd 
-# ???
 
-######################
-# Added for Homework
-######################
 # htpasswd Authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 openshift_master_htpasswd_file=/root/htpasswd.openshift
@@ -144,9 +101,7 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 ###########################################################################
 ### OpenShift Router and Registry Vars
 ###########################################################################
-######################
-# Added for Homework
-######################
+
 # default selectors for router and registry services
 openshift_router_selector='node-role.kubernetes.io/infra=true'
 openshift_registry_selector='node-role.kubernetes.io/infra=true'
@@ -154,14 +109,8 @@ openshift_registry_selector='node-role.kubernetes.io/infra=true'
 openshift_hosted_router_replicas=2
 #openshift_hosted_router_certificate={"certfile": "/path/to/router.crt", "keyfile": "/path/to/router.key", "cafile": "/path/to/router-ca.crt"}
 
-######################
-# Added for Homework
-######################
 openshift_hosted_registry_replicas=1
 
-######################
-# Added for Homework
-######################
 openshift_hosted_registry_storage_kind=nfs
 openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
 openshift_hosted_registry_storage_nfs_directory=/srv/nfs
@@ -172,9 +121,7 @@ openshift_hosted_registry_storage_volume_size=20Gi
 ###########################################################################
 ### OpenShift Service Catalog Vars
 ###########################################################################
-######################
-# Added for Homework
-######################
+
 openshift_enable_service_catalog=true
 
 template_service_broker_install=true
@@ -194,9 +141,7 @@ openshift_hosted_etcd_storage_volume_size=10G
 ###########################################################################
 ### OpenShift Metrics and Logging Vars
 ###########################################################################
-######################
-# Added for Homework
-######################
+
 openshift_cluster_monitoring_operator_install=true
 
 openshift_cluster_monitoring_operator_prometheus_storage_capacity=20Gi
@@ -280,9 +225,6 @@ openshift_logging_storage_labels={'storage': 'logging'}
 # Necessary because of a bug in the installer on 3.9
 openshift_prometheus_node_exporter_image_version=v3.9
 
-######################
-# Added for Homework
-######################
 ## Add Prometheus Metrics:
 openshift_hosted_prometheus_deploy=true
 #openshift_prometheus_node_selector={"node-role.kubernetes.io/infra": "true"}
@@ -352,19 +294,19 @@ openshift_prometheus_alertbuffer_storage_type='pvc'
 openshift_additional_projects={'openshift-template-service-broker': {'default_node_selector': ''}}
 
 # OpenShift Project Request Template Edits
-openshift_project_request_template_edits=[{ "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "default-deny-all" }, "spec": { "podSelector": {}, "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "allow-from-same-namespace" }, "spec": { "podSelector": {}, "ingress": [ { "from": [ { "podSelector": {} } ] } ], "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "allow-from-default-namespace" }, "spec": { "podSelector": {}, "ingress": [ { "from": [ { "namespaceSelector": { "matchLabels": { "name": "default" } } } ] } ], "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "LimitRange", "apiVersion": "v1", "metadata": { "creationTimestamp": null, "name": "limits" }, "spec": { "limits": [ { "max": { "cpu": "1000m", "memory": "4Gi" }, "min": { "cpu": "200m", "memory": "512Mi" }, "type": "Pod" }, { "default": { "cpu": "400m", "memory": "1Gi" }, "max": { "cpu": "1000m", "memory": "4Gi" }, "min": { "cpu": "200m", "memory": "512Mi" }, "type": "Container" } ] } } }]
+#openshift_project_request_template_edits=[{ "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "default-deny-all" }, "spec": { "podSelector": {}, "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "allow-from-same-namespace" }, "spec": { "podSelector": {}, "ingress": [ { "from": [ { "podSelector": {} } ] } ], "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "NetworkPolicy", "apiVersion": "networking.k8s.io/v1", "metadata": { "name": "allow-from-default-namespace" }, "spec": { "podSelector": {}, "ingress": [ { "from": [ { "namespaceSelector": { "matchLabels": { "name": "default" } } } ] } ], "policyTypes": [ "Ingress" ] } } }, { "key": "objects", "action": "append", "value": { "kind": "LimitRange", "apiVersion": "v1", "metadata": { "creationTimestamp": null, "name": "limits" }, "spec": { "limits": [ { "max": { "cpu": "1000m", "memory": "4Gi" }, "min": { "cpu": "200m", "memory": "512Mi" }, "type": "Pod" }, { "default": { "cpu": "400m", "memory": "1Gi" }, "max": { "cpu": "1000m", "memory": "4Gi" }, "min": { "cpu": "200m", "memory": "512Mi" }, "type": "Container" } ] } } }]
 
 # OpenShift Project Request Template Name
-openshift_project_request_template_name=project-request
+#openshift_project_request_template_name=project-request
 
 # OpenShift Project Request Template Namespace
-openshift_project_request_template_namespace=default
+#openshift_project_request_template_namespace=default
 
 # OpenShift Project Request Template Manage
-openshift_project_request_template_manage=true
+#openshift_project_request_template_manage=true
 
 # OpenShift Project Request Template
-osm_project_request_template="default/project-request"
+#osm_project_request_template="default/project-request"
 
 ###########################################################################
 ### OpenShift Hosts

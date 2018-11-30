@@ -4,7 +4,7 @@
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
 
 #Remove leftover content
-ansible nodes -a "rm -rf /etc/origin"
+ansible all -a "rm -rf /etc/origin/*"
 
 #Remove leftover content
 ansible all -a "rm -rf /root/.ansible/tmp/*"
