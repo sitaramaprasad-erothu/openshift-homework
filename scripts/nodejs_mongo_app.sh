@@ -15,7 +15,7 @@ oc get pvc
 #Check the Service Routes for the Application
 oc get route
 #Open URL to verify
-curl http://nodejs-mongo-persistent-smoke-test.apps.$GUID.example.opentlc.com
+curl `oc get route | grep example.opentlc.com | awk '{ print $2 }'`
 #Delete the Smoke Test Project
 #oc delete project smoke-test
 
