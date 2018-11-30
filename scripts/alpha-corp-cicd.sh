@@ -38,8 +38,9 @@ oc adm policy add-role-to-group admin alpha-corp -n alpha-task-prod
 oc adm policy add-role-to-group admin alpha-corp -n alpha-cicd-dev
 
 oc login -u system:admin
-
+oc label namespace alpha-cicd-dev name=jenkins
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true -n alpha-cicd-dev
+
 #oc new-app jenkins-persistent -n alpha-cicd-dev
 # Deploy Demo
 oc new-app -n alpha-task-build -f /root/openshift-homework/yaml/alpha-corp-cicd-template.yaml
