@@ -42,7 +42,7 @@ openshift_release=3.11.16
 # Added for Homework
 ######################
 # Node Groups
-openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-common', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}]
+openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=e07d']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=e07d']}, {'name': 'node-config-gwar', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=gwar','cluster=e07d'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-hatebreed', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=hatebreed','cluster=e07d'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-common', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=e07d'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}]
 
 ######################
 # Added for Homework
@@ -104,9 +104,9 @@ openshift_master_cluster_method=native
 ######################
 # Added for Homework
 ######################
-openshift_master_cluster_hostname=loadbalancer1.GUID.internal
-openshift_master_cluster_public_hostname=loadbalancer1.GUID.example.opentlc.com
-openshift_master_default_subdomain=apps.GUID.example.opentlc.com
+openshift_master_cluster_hostname=loadbalancer1.e07d.internal
+openshift_master_cluster_public_hostname=loadbalancer1.e07d.example.opentlc.com
+openshift_master_default_subdomain=apps.e07d.example.opentlc.com
 
 
 #openshift_master_ca_certificate={'certfile': '/root/intermediate_ca.crt', 'keyfile': '/root/intermediate_ca.key'}
@@ -377,34 +377,34 @@ nodes
 nfs
 
 [lb]
-loadbalancer1.GUID.internal
+loadbalancer1.e07d.internal
 
 [masters]
-master1.GUID.internal
-master2.GUID.internal
-master3.GUID.internal
+master1.e07d.internal
+master2.e07d.internal
+master3.e07d.internal
 
 [etcd]
-master1.GUID.internal
-master2.GUID.internal
-master3.GUID.internal
+master1.e07d.internal
+master2.e07d.internal
+master3.e07d.internal
 
 [nodes]
 ## These are the masters
-master1.GUID.internal openshift_hostname=master1.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
-master2.GUID.internal openshift_hostname=master2.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
-master3.GUID.internal openshift_hostname=master3.GUID.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master1.e07d.internal openshift_hostname=master1.e07d.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master2.e07d.internal openshift_hostname=master2.e07d.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
+master3.e07d.internal openshift_hostname=master3.e07d.internal openshift_node_group_name='node-config-master' openshift_node_problem_detector_install=true
 
 
 ## These are infranodes
-infranode1.GUID.internal openshift_hostname=infranode1.GUID.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
-infranode2.GUID.internal openshift_hostname=infranode2.GUID.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
+infranode1.e07d.internal openshift_hostname=infranode1.e07d.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
+infranode2.e07d.internal openshift_hostname=infranode2.e07d.internal openshift_node_group_name='node-config-infra' openshift_node_problem_detector_install=true
 
 ## These are regular nodes
-node1.GUID.internal openshift_hostname=node1.GUID.internal  openshift_node_group_name='node-config-alpha' openshift_node_problem_detector_install=true
-node2.GUID.internal openshift_hostname=node2.GUID.internal  openshift_node_group_name='node-config-beta' openshift_node_problem_detector_install=true
-node3.GUID.internal openshift_hostname=node3.GUID.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
-node4.GUID.internal openshift_hostname=node4.GUID.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
+node1.e07d.internal openshift_hostname=node1.e07d.internal  openshift_node_group_name='node-config-gwar' openshift_node_problem_detector_install=true
+node2.e07d.internal openshift_hostname=node2.e07d.internal  openshift_node_group_name='node-config-hatebreed' openshift_node_problem_detector_install=true
+node3.e07d.internal openshift_hostname=node3.e07d.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
+node4.e07d.internal openshift_hostname=node4.e07d.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
 
 [nfs]
-support1.GUID.internal openshift_hostname=support1.GUID.internal
+support1.e07d.internal openshift_hostname=support1.e07d.internal
