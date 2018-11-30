@@ -124,12 +124,6 @@
     - name: Tag OSE-Recycler Image
       shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
 
-- name: Smoke Test
-  hosts: localhost
-  tasks:
-    - name: Create a Smoke Test Application
-      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
-
 - name: Kube Config
   hosts: localhost
   tasks:
@@ -142,36 +136,29 @@
     - name: change user to system:dmin
       shell: oc login -u system:admin
 
-
-- name: Creating Group For Alpha Corp
+- name: Update Default Project
   hosts: localhost
   tasks:
-    - name: Adding user for Alpha Group
-      shell: oc adm groups new alpha-corp andrew amy
+    - name: Label Default Project
+      shell: oc label namespace default name=default
 
-- name: Creating Group For Beta Corp
+- name: Applying Network Policy
   hosts: localhost
   tasks:
-    - name: Adding user for Beta Group
-      shell: oc adm groups new beta-corp brian betty
-
-- name: Adding Label to User Group Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Adding Label to User Group for Beta Group
-      shell: oc label group/beta-corp client=beta
-
-- name: Adding Label to User Group Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Adding Label to User Group for Beta Group
-      shell: oc label group/alpha-corp client=alpha
+    - name: Apply network policy 
+      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
       
 - name: Removing Self Provisning from Users
   hosts: localhost
   tasks:
     - name: Removing Self Provisning from Users
       shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+
+- name: Create User and Groups
+  hosts: localhost
+  tasks:
+    - name: Create User and Groups 
+      shell: oc create -f /root/openshift-homework/yaml/create-users-groups.yaml
       
 - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
   hosts: localhost
@@ -184,19 +171,12 @@
   tasks:
     - name: Adding role processedtemplates.template.openshift.io to Beta Corp
       shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
-      
+   
 #- name: Applying Limits to Default Templet
 #  hosts: localhost
 #  tasks:
 #    - name: Applying limits to default templet
 #      shell: oc create -f /root/openshift-homework/yaml/projectlimit.yaml
-
-#- name: Applying Network Policy
-#  hosts: localhost
-#  tasks:
-#    - name: Apply network policy 
-#      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
-      
       
 - name: Deploy App to Alpha Corp
   hosts: localhost
