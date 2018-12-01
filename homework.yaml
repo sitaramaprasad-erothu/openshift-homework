@@ -159,8 +159,8 @@
   tasks:
     - replace:
         dest: /etc/origin/master/master-config.yaml
-        regexp: '^  projectRequestTemplate: '''
-        replace: '  projectRequestTemplate: default/project-request'
+        regexp: '^  projectRequestTemplate: "''"'
+        replace: '  projectRequestTemplate: default/project-request
 #    - name: Updating Master Config 
 #      shell: ansible masters -m shell -a "sed -i -e 's@projectRequestTemplate: '"''"'@projectRequestTemplate: default/project-request@g' etc/origin/master/master-config.yaml"
 
