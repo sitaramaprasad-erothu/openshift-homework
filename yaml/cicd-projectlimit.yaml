@@ -8,21 +8,10 @@ spec:
       max:
         cpu: "1850m" 
         memory: "7Gi" 
-      min:
-        cpu: "900m" 
-        memory: "4Gi" 
+
     - type: "Container"
       max:
         cpu: "1700m" 
         memory: "4Gi" 
-      min:
-        cpu: "500m" 
-        memory: "1Gi" 
-      default:
-        cpu: "500m" 
-        memory: "1Gi" 
-      defaultRequest:
-        cpu: "500m"
-        memory: "1Gi" 
-      maxLimitRequestRatio:
-        cpu: "2" 
+
+
