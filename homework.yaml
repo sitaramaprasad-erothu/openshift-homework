@@ -157,8 +157,12 @@
 - name: Updating Master Config
   hosts: master
   tasks:
-    - name: Updating Master Config 
-      shell: ansible masters -m shell -a "sed -i -e 's@projectRequestTemplate: '"'"''"'"'@projectRequestTemplate: default/project-request@g' etc/origin/master/master-config.yaml"
+    - lineinfile:
+        path: /etc/selinux/config
+        regexp: '^projectRequestTemplate: '''
+        line: 'projectRequestTemplate: default/project-request'
+#    - name: Updating Master Config 
+#      shell: ansible masters -m shell -a "sed -i -e 's@projectRequestTemplate: '"''"'@projectRequestTemplate: default/project-request@g' etc/origin/master/master-config.yaml"
 
 - name: Updating Master Config
   hosts: localhost
