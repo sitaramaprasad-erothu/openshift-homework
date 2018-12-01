@@ -1,15 +1,19 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: alpha-cicd-dev
-  group: alpha-cicd-dev
+  template: alpha-cicd-build
+  group: alpha-cicd-build
 metadata:
   annotations:
     iconClass: icon-jenkins
     tags: instant-app,jenkins,gogs,nexus,cicd
-  name: alpha-cicd-dev
+  name: alpha-cicd-build
 message: "Use the following credentials for login:\nJenkins: use your OpenShift credentials\nNexus: admin/admin123\nSonarQube: admin/admin\nGogs Git Server: gogs/gogs"
 parameters:
+- displayName: Namespace to deploy
+  value: alpha-cicd-dev
+  name: NAMESPACE
+  required: true
 - displayName: Build project name
   value: alpha-task-build
   name: BUILD_PROJECT
@@ -78,6 +82,7 @@ objects:
       app: cicd-pipeline
       name: cicd-pipeline
     name: tasks-pipeline
+    namespace: ${NAMESPACE}
   spec:
     triggers:
       - type: GitHub
@@ -112,8 +117,7 @@ objects:
             stages {
               stage('Build App') {
                 steps {
-
-                  git branch: 'eap-7', url: 'https://github.com/OpenShiftDemos/openshift-tasks.git'
+                  git branch: 'eap-7', url: 'http://gogs:3000/gogs/openshift-tasks.git'
                   sh "${mvnCmd} install -DskipTests=true"
                 }
               }
@@ -302,9 +306,7 @@ objects:
         containers:
         - env:
           - name: CICD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
+            value: ${NAMESPACE}
           command:
           - /bin/bash
           - -x
