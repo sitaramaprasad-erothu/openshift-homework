@@ -7,14 +7,14 @@ spec:
     - type: "Pod"
       max:
         cpu: "4000m" 
-        memory: "7168Mi" 
+        memory: "734003200Mi" 
       min:
         cpu: "1000m" 
         memory: "1600Mi" 
     - type: "Container"
       max:
         cpu: "1500m" 
-        memory: "1600Mi" 
+        memory: "734003200Mi" 
       min:
         cpu: "500m" 
         memory: "700Mi" 
