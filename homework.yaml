@@ -157,8 +157,8 @@
 - name: Updating Master Config
   hosts: masters
   tasks:
-    - lineinfile:
-        path: /etc/origin/master/master-config.yaml
+    - replace:
+        dest: /etc/origin/master/master-config.yaml
         regexp: '^  projectRequestTemplate: '''
         replace: '  projectRequestTemplate: default/project-request'
 #    - name: Updating Master Config 
