@@ -20,9 +20,9 @@ spec:
         memory: "1Gi" 
       default:
         cpu: "500m" 
-        memory: "512Mi" 
+        memory: "1Gi" 
       defaultRequest:
         cpu: "500m"
-        memory: "512Mi" 
+        memory: "1Gi" 
       maxLimitRequestRatio:
         cpu: "2" 
