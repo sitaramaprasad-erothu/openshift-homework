@@ -7,22 +7,22 @@ spec:
     - type: "Pod"
       max:
         cpu: "4000m" 
-        memory: "734003200Mi" 
+        memory: "700Ti" 
       min:
         cpu: "1000m" 
-        memory: "734003200Mi" 
+        memory: "700Ti" 
     - type: "Container"
       max:
         cpu: "1500m" 
-        memory: "734003200Mi" 
+        memory: "700Ti" 
       min:
         cpu: "500m" 
-        memory: "700Mi" 
+        memory: "700Ti" 
       default:
         cpu: "500m" 
-        memory: "700Mi" 
+        memory: "700Ti" 
       defaultRequest:
         cpu: "500m"
-        memory: "700Mi" 
+        memory: "700Ti" 
       maxLimitRequestRatio:
-        cpu: "2" 
+        cpu: "1" 
