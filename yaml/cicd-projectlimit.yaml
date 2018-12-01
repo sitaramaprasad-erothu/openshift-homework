@@ -10,7 +10,7 @@ spec:
         memory: "734003200Mi" 
       min:
         cpu: "1000m" 
-        memory: "1600Mi" 
+        memory: "734003200Mi" 
     - type: "Container"
       max:
         cpu: "1500m" 
