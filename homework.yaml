@@ -155,11 +155,11 @@
 #      shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
 
 - name: Updating Master Config
-  hosts: master
+  hosts: masters
   tasks:
     - lineinfile:
-        path: /etc/selinux/config
-        regexp: '^projectRequestTemplate: "''"'
+        path: /etc/origin/master/master-config.yaml
+        regexp: '^projectRequestTemplate: '''
         line: 'projectRequestTemplate: default/project-request'
 #    - name: Updating Master Config 
 #      shell: ansible masters -m shell -a "sed -i -e 's@projectRequestTemplate: '"''"'@projectRequestTemplate: default/project-request@g' etc/origin/master/master-config.yaml"
