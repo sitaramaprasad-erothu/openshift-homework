@@ -112,7 +112,7 @@ objects:
             stages {
               stage('Build App') {
                 steps {
-#                  git branch: 'eap-7', url: 'http://gogs:3000/gogs/openshift-tasks.git'
+
                   git branch: 'eap-7', url: 'https://github.com/OpenShiftDemos/openshift-tasks.git'
                   sh "${mvnCmd} install -DskipTests=true"
                 }
