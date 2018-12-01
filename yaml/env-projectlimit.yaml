@@ -9,20 +9,20 @@ spec:
         cpu: "700m" 
         memory: "700Mi" 
       min:
-        cpu: "300m" 
+        cpu: "500m" 
         memory: "500Mi" 
     - type: "Container"
       max:
-        cpu: "500m" 
-        memory: "700m" 
+        cpu: "400m" 
+        memory: "400Mi" 
       min:
         cpu: "300m" 
-        memory: "400Mi" 
+        memory: "300Mi" 
       default:
         cpu: "300m" 
-        memory: "400Mi" 
+        memory: "300Mi" 
       defaultRequest:
         cpu: "300m"
-        memory: "400Mi" 
+        memory: "300Mi" 
       maxLimitRequestRatio:
-        cpu: "1" 
+        cpu: "2" 
