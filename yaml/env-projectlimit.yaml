@@ -25,4 +25,4 @@ spec:
         cpu: "300m"
         memory: "300Mi" 
       maxLimitRequestRatio:
-        cpu: "2" 
+        cpu: "1" 
