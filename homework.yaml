@@ -164,12 +164,19 @@
         replace: "projectRequestTemplate: \"default/project-request\""
         backup: yes
 
-- name: Updating Master Config
-  hosts: localhost
+- name: Restart master api and controllera
+  hosts: masters
   tasks:
-    - name: Updating Master Config 
-      shell: ansible nodes -m shell -a "systemctl restart atomic-openshift-node"
-     
+    - name: Restart masters api and controllers
+      command: "/usr/local/bin/master-restart {{ item }}"
+      with_items:
+        - api
+        - controllers
+      retries: 10
+      delay: 10
+      register: result
+      until: result.rc == 0
+   
       
 - name: Removing Self Provisning from Users
   hosts: localhost
@@ -182,6 +189,26 @@
   tasks:
     - name: Create User and Groups 
       shell: oc create -f /root/openshift-homework/yaml/create-users-groups.yaml
+
+- name: Adding Label to Groups
+  hosts: masters
+  tasks:
+    - name: Adding Label to Groups
+      command: "oc label {{ item }}"
+      with_items:
+        - group/beta-corp client=beta
+        - group/alpha-corp client=alpha
+        - group/common client=common
+      
+- name: Adding role processedtemplates.template.openshift.io to Groups
+  hosts: masters
+  tasks:
+    - name: Adding role processedtemplates.template.openshift.io
+      command: "oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io {{ item }}"
+      with_items:
+        - alpha-corp
+        - beta-corp
+        - common
       
 - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
   hosts: localhost
@@ -195,20 +222,7 @@
     - name: Adding role processedtemplates.template.openshift.io to Beta Corp
       shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
    
-
-#- name: Restart master api and controllera
-#  hosts: masters
-#  tasks:
-#    - name: Restart masters api and controllers
-#      command: "/usr/local/bin/master-restart {{ item }}"
-#      with_items:
-#        - api
-#        - controllers
-#      retries: 10
-#      delay: 10
-#      register: result
-#      until: result.rc == 0
-      
+     
 #- name: Deploy App to Alpha Corp
 #  hosts: localhost
 #  tasks:
