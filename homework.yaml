@@ -224,18 +224,18 @@
       register: result
       until: result.rc == 0
       
-- name: Deploy App to Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Deploy App to Alpha Corp
-      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
-
-     
-- name: Deploy App to Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Deploy App to Alpha Corp
-      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
+#- name: Deploy App to Alpha Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Deploy App to Alpha Corp
+#      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
+#
+#     
+#- name: Deploy App to Beta Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Deploy App to Alpha Corp
+#      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
 
 ##
 ##
