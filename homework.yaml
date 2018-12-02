@@ -197,12 +197,12 @@
         - group/alpha-corp client=alpha
         - group/common client=common
 
-- name: Removing Self Provisning from Users
-  hosts: localhost
-  tasks:
-    - name: Removing Self Provisning from Users
+#- name: Removing Self Provisning from Users
+#  hosts: localhost
+#  tasks:
+#    - name: Removing Self Provisning from Users
 #      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
-      shell: oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
+#      shell: oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
       
 - name: Adding role processedtemplates.template.openshift.io to Groups
   hosts: localhost
