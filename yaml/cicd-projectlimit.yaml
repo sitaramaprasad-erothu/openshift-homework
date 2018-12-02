@@ -12,7 +12,7 @@ spec:
     - type: "Container"
       max:
         cpu: "1400m" 
-        memory: "7905944Ki" 
+        memory: "79059440Ki" 
 
 
 
