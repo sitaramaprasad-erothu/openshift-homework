@@ -142,11 +142,11 @@
     - name: Label Default Project
       shell: oc label namespace default name=default
 
-- name: Applying Network Policy
-  hosts: localhost
-  tasks:
-    - name: Apply network policy 
-      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
+#- name: Applying Network Policy
+#  hosts: localhost
+#  tasks:
+#    - name: Apply network policy 
+#      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
 
 - name: Creating Default Template
   hosts: localhost
@@ -176,7 +176,6 @@
       delay: 10
       register: result
       until: result.rc == 0
-   
       
 - name: Removing Self Provisning from Users
   hosts: localhost
@@ -184,14 +183,18 @@
     - name: Removing Self Provisning from Users
       shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
 
-- name: Create User and Groups
+- name: Creating Groups
   hosts: localhost
   tasks:
-    - name: Create User and Groups 
-      shell: oc create -f /root/openshift-homework/yaml/create-users-groups.yaml
+    - name: Creating Groups
+      command: "oc adm groups new {{ item }}"
+      with_items:
+        - alpha-corp andrew amy
+        - beta-corp brian betty
+        - common user1 user2
 
 - name: Adding Label to Groups
-  hosts: masters
+  hosts: localhost
   tasks:
     - name: Adding Label to Groups
       command: "oc label {{ item }}"
@@ -201,7 +204,7 @@
         - group/common client=common
       
 - name: Adding role processedtemplates.template.openshift.io to Groups
-  hosts: masters
+  hosts: localhost
   tasks:
     - name: Adding role processedtemplates.template.openshift.io
       command: "oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io {{ item }}"
@@ -222,19 +225,19 @@
     - name: Adding role processedtemplates.template.openshift.io to Beta Corp
       shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
    
+ 
+- name: Deploy App to Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
+
      
-#- name: Deploy App to Alpha Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
-#
-#     
-#- name: Deploy App to Beta Corp
-#  hosts: localhost
-#  tasks:
-#    - name: Deploy App to Alpha Corp
-#      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
+- name: Deploy App to Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Alpha Corp
+      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
 
 ##
 ##
