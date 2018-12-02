@@ -2,11 +2,21 @@
 
 oc login -u system:admin
 
-oc adm new-project alpha-cicd-dev --node-selector='client=alpha'
-oc adm new-project alpha-task-dev --node-selector='client=alpha'
-oc adm new-project alpha-task-test --node-selector='client=alpha'
-oc adm new-project alpha-task-prod --node-selector='client=alpha'
+oc new-project alpha-cicd-dev --node-selector='client=alpha'
+oc new-project alpha-task-dev --node-selector='client=alpha'
+oc new-project alpha-task-test --node-selector='client=alpha'
+oc new-project alpha-task-prod --node-selector='client=alpha'
 
+oc label namespace alpha-cicd-dev client=alpha
+oc annotate namespace alpha-cicd-dev openshift.io/node-selector='client=alpha'
+oc label namespace alpha-task-dev client=alpha
+oc annotate namespace alpha-task-dev openshift.io/node-selector='client=alpha'
+oc label namespace alpha-task-test client=alpha
+oc annotate namespace alpha-task-test openshift.io/node-selector='client=alpha'
+oc label namespace alpha-task-prod client=alpha
+oc annotate namespace alpha-task-prod openshift.io/node-selector='client=alpha'
+
+oc delete limitrange project-request-custom-default-limits -n alpha-cicd-dev
 
 # Grant Jenkins Access to Projects
 
