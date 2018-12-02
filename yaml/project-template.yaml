@@ -116,29 +116,29 @@ objects:
 - apiVersion: "v1"
   kind: "LimitRange"
   metadata:
-    name: "core-resource-limits"
+    name: "core-resource-limits" 
   spec:
     limits:
       - type: "Pod"
         max:
-          cpu: "2"
-          memory: "4Gi"
+          cpu: "2" 
+          memory: "1Gi" 
         min:
-          cpu: "100m"
-          memory: "1Gi"
+          cpu: "200m" 
+          memory: "6Mi" 
       - type: "Container"
         max:
-          cpu: "2"
-          memory: "4Gi"
+          cpu: "2" 
+          memory: "1Gi" 
         min:
-          cpu: "100m"
-          memory: "1Gi"
+          cpu: "100m" 
+          memory: "4Mi" 
         default:
-          cpu: "200m"
-          memory: "1Gi"
+          cpu: "300m" 
+          memory: "200Mi" 
         defaultRequest:
-          cpu: "100m"
-          memory: "1Gi"
+          cpu: "200m" 
+          memory: "100Mi" 
         maxLimitRequestRatio:
           cpu: "10"
 parameters:
