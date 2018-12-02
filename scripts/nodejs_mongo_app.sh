@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 #Create Smoke Test Project
+oc login -u system:admin
 oc new-project smoke-test
 oc label namespace smoke-test client=common
 oc annotate namespace smoke-test openshift.io/node-selector='client=common'
