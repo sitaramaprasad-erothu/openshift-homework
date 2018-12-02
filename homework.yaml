@@ -148,6 +148,7 @@
     - name: Creating Default Template 
       shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
 
+      
 - name: Set defaults for new projects
   hosts: masters
   tasks:
@@ -171,39 +172,49 @@
       register: result
       until: result.rc == 0
 
-- name: Creating users in openshift 
+- name: Login System Admin
   hosts: localhost
   tasks:
-    - name: Creating Groups
-      command: "oc create user {{ item }}"
-      with_items:
-        - amy
-        - andrew
-        - brian
-        - betty
-        - user1
-        - user2
-        
-- name: Creating Groups
-  hosts: localhost
-  tasks:
-    - name: Creating Groups
-      command: "oc adm groups new {{ item }}"
-      with_items:
-        - alpha-corp andrew amy
-        - beta-corp brian betty
-        - common user1 user2
+    - name: change user to system:dmin
+      shell: oc login -u system:admin
 
-- name: Adding Label to Groups
+
+- name: Creating Group For Alpha Corp
   hosts: localhost
   tasks:
-    - name: Adding Label to Groups
-      command: "oc label {{ item }}"
-      with_items:
-        - group/beta-corp client=beta
-        - group/alpha-corp client=alpha
-        - group/common client=common
+    - name: Adding user for Alpha Group
+      shell: oc adm groups new alpha-corp andrew amy
 
+- name: Creating Group For Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding user for Beta Group
+      shell: oc adm groups new beta-corp brian betty
+
+- name: Creating Group For Common
+  hosts: localhost
+  tasks:
+    - name: Adding user for Common
+      shell: oc adm groups new common user1 user2
+
+- name: Adding Label to User Group Beta Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Beta Group
+      shell: oc label group/beta-corp client=beta
+
+- name: Adding Label to User Group Alpha Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for Alpha Group
+      shell: oc label group/alpha-corp client=alpha
+
+- name: Adding Label to User Group Common Corp
+  hosts: localhost
+  tasks:
+    - name: Adding Label to User Group for CommonGroup
+      shell: oc label group/common client=common
+      
 - name: Removing Self Provisning from Users
   hosts: localhost
   tasks:
