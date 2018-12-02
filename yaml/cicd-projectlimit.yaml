@@ -6,12 +6,12 @@ spec:
   limits:
     - type: "Pod"
       max:
-        cpu: "1800m" 
-        memory: "13400320Ki" 
+        cpu: "4400m" 
+        memory: "7862Mi" 
 
     - type: "Container"
       max:
-        cpu: "1400m" 
+        cpu: "1800m" 
         memory: "7905944Ki" 
 
 

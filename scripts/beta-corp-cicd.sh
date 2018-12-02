@@ -3,13 +3,13 @@
 oc login -u system:admin
 
 oc adm new-project beta-task-dev --node-selector='client=beta'
-#oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-dev
+oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-dev
 oc adm new-project beta-task-test --node-selector='client=beta'
-#oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-test
+oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-test
 oc adm new-project beta-task-prod --node-selector='client=beta'
-#oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-prod
+oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-task-prod
 oc adm new-project beta-cicd-dev --node-selector='client=beta'
-#oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-cicd-dev
+oc create -f /root/openshift-homework/yaml/cicd-projectlimit.yaml -n beta-cicd-dev
 
 #oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-task-dev
 #oc create -f /root/openshift-homework/yaml/projectlimit.yaml -n beta-task-test
