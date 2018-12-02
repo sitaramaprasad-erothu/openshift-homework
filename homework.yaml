@@ -170,30 +170,30 @@
 #      delay: 10
 #      register: result
 #      until: result.rc == 0
-
-- name: Creating users in openshift 
-  hosts: localhost
-  tasks:
-    - name: Creating Groups
-      command: "oc create user {{ item }}"
-      with_items:
-        - amy
-        - andrew
-        - brian
-        - betty
-        - user1
-        - user2
-        
-- name: Creating Groups
-  hosts: localhost
-  tasks:
-    - name: Creating Groups
-      command: "oc adm groups new {{ item }}"
-      with_items:
-        - alpha-corp andrew amy
-        - beta-corp brian betty
-        - common user1 user2
-
+#
+#- name: Creating users in openshift 
+#  hosts: localhost
+#  tasks:
+#    - name: Creating Groups
+#      command: "oc create user {{ item }}"
+#      with_items:
+#        - amy
+#        - andrew
+#        - brian
+#        - betty
+#        - user1
+#        - user2
+#        
+#- name: Creating Groups
+#  hosts: localhost
+#  tasks:
+#    - name: Creating Groups
+#      command: "oc adm groups new {{ item }}"
+#      with_items:
+#        - alpha-corp andrew amy
+#        - beta-corp brian betty
+#        - common user1 user2
+#
 - name: Adding Label to Groups
   hosts: localhost
   tasks:
