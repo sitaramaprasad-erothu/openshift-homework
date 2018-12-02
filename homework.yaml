@@ -1,188 +1,182 @@
 ---
-- name: Update script permissions
-  hosts: localhost
-  tasks:
-    - name: Update script permissions
-      shell: chmod +x /root/openshift-homework/scripts/*.sh
-      
-- name: Backup of existing Inventory Hosts File
-  hosts: localhost
-  tasks:
-    - name: Backup of existing Inventory Hosts File
-      shell: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
- 
-
-- name: Backup of existing Password File
-  hosts: localhost
-  tasks:
-    - name: Backup of existing Password File
-      shell: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
-
-- name: copy new  password File
-  hosts: localhost
-  tasks:
-    - name: copy new  password File
-      shell: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
-      
-- name: Copy Inventory Hosts File
-  hosts: localhost
-  tasks:
-    - name: Generate Inventory script
-      shell: cp -f /root/openshift-homework/hosts /etc/ansible/hosts
-
-- name: Generate Inventory Hosts File
-  hosts: localhost
-  tasks:
-    - name: Generate Inventory script
-      script: /root/openshift-homework/scripts/generate_inventory.sh
-
-- name: Prepare GUID environment variable across all hosts
-  hosts: all
-  tasks:
-    - name: All GUID env variable
-      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
-
-- name: Verify Installation and Configuration of Docker
-  hosts: nodes
-  tasks:
-    - name: docker restart
-      shell: systemctl restart docker
-
-- name: Verify NFS Shared Volumes on Hosts
-  hosts: nfs
-  tasks:
-    - name: List NFS Shared Volumes
-      shell: exportfs
-
-- name: Install packages and config auth
-  hosts: localhost
-  tasks:
-    - name: required packages are present
-      yum:
-        name:
-          - openshift-ansible
-          - atomic-openshift-clients
-        state: present
-
-- name: Execute the openshift-ansible prerequisites
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
-
-- name: Execute the openshift-ansible Deployer
-  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
-
-- name: Verify OpenShift Cluster
-  hosts: masters[0]
-  tasks:
-    - fetch:
-        src: /root/.kube/config
-        dest: /root/.kube/config
-        flat: yes
-        
-- name: Post installation configuration
-  hosts: localhost
-  tasks:
-    - name: Verify logged in User is system:dmin
-      shell: oc whoami | grep system:admin
-
-- name: Admin User admin as Cluster Admin
-  hosts: localhost
-  tasks:
-    - name: Admin User admin as Cluster Admin
-      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
-
-- name: Create PVs for Users
-  hosts: nfs
-  tasks:
-    - name: Create PV directories
-      script: /root/openshift-homework/scripts/create_pvs.sh
-    - name: Restarting NFS Server...
-      shell: systemctl restart nfs-server
-
-- name: Create 25 definitions files for PVs 5G size
-  hosts: localhost
-  tasks:
-    - name: Create ReadWriteOnce PV definitions
-      script: /root/openshift-homework/scripts/pvs_5Gsize.sh
-
-- name: Create 25 definitions files for PVs 10G size
-  hosts: localhost
-  tasks:
-    - name: Create ReadWriteMany PV definitions
-      script: /root/openshift-homework/scripts/pvs_10Gsize.sh
-
-- name: Create all PVs from definitions files
-  hosts: localhost
-  tasks:
-    - name: Create all defined PVs
-      shell: cat /root/pvs/* | oc create -f -
-
-- name: Fix NFS Persistent Volume Recycling
-  hosts: nodes
-  tasks:
-    - name: Pull Latest OSE-Recycler Image
-      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
-    - name: Tag OSE-Recycler Image
-      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
-
-- name: Kube Config
-  hosts: localhost
-  tasks:
-    - name: copy kube config
-      shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
-
-- name: Login System Admin
-  hosts: localhost
-  tasks:
-    - name: change user to system:dmin
-      shell: oc login -u system:admin
-
-- name: Update Default Project
-  hosts: localhost
-  tasks:
-    - name: Label Default Project
-      shell: oc label namespace default name=default
-
-#- name: Applying Network Policy
+#- name: Update script permissions
 #  hosts: localhost
 #  tasks:
-#    - name: Apply network policy 
-#      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
-
-- name: Creating Default Template
-  hosts: localhost
-  tasks:
-    - name: Creating Default Template 
-      shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
-
-- name: Set defaults for new projects
-  hosts: masters
-  tasks:
-    - name: Set project request template as default
-      replace:
-        path: /etc/origin/master/master-config.yaml
-        regexp: "projectRequestTemplate: ''"
-        replace: "projectRequestTemplate: \"default/project-request\""
-        backup: yes
-
-- name: Restart master api and controllera
-  hosts: masters
-  tasks:
-    - name: Restart masters api and controllers
-      command: "/usr/local/bin/master-restart {{ item }}"
-      with_items:
-        - api
-        - controllers
-      retries: 10
-      delay: 10
-      register: result
-      until: result.rc == 0
-      
-- name: Removing Self Provisning from Users
-  hosts: localhost
-  tasks:
-    - name: Removing Self Provisning from Users
-      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
-
+#    - name: Update script permissions
+#      shell: chmod +x /root/openshift-homework/scripts/*.sh
+#      
+#- name: Backup of existing Inventory Hosts File
+#  hosts: localhost
+#  tasks:
+#    - name: Backup of existing Inventory Hosts File
+#      shell: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
+# 
+#
+#- name: Backup of existing Password File
+#  hosts: localhost
+#  tasks:
+#    - name: Backup of existing Password File
+#      shell: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
+#
+#- name: copy new  password File
+#  hosts: localhost
+#  tasks:
+#    - name: copy new  password File
+#      shell: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
+#      
+#- name: Copy Inventory Hosts File
+#  hosts: localhost
+#  tasks:
+#    - name: Generate Inventory script
+#      shell: cp -f /root/openshift-homework/hosts /etc/ansible/hosts
+#
+#- name: Generate Inventory Hosts File
+#  hosts: localhost
+#  tasks:
+#    - name: Generate Inventory script
+#      script: /root/openshift-homework/scripts/generate_inventory.sh
+#
+#- name: Prepare GUID environment variable across all hosts
+#  hosts: all
+#  tasks:
+#    - name: All GUID env variable
+#      shell: export GUID=`hostname | cut -d"." -f2`; echo "export GUID=$GUID" >> $HOME/.bashrc
+#
+#- name: Verify Installation and Configuration of Docker
+#  hosts: nodes
+#  tasks:
+#    - name: docker restart
+#      shell: systemctl restart docker
+#
+#- name: Verify NFS Shared Volumes on Hosts
+#  hosts: nfs
+#  tasks:
+#    - name: List NFS Shared Volumes
+#      shell: exportfs
+#
+#- name: Install packages and config auth
+#  hosts: localhost
+#  tasks:
+#    - name: required packages are present
+#      yum:
+#        name:
+#          - openshift-ansible
+#          - atomic-openshift-clients
+#        state: present
+#
+#- name: Execute the openshift-ansible prerequisites
+#  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+#
+#- name: Execute the openshift-ansible Deployer
+#  import_playbook: /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+#
+#- name: Verify OpenShift Cluster
+#  hosts: masters[0]
+#  tasks:
+#    - fetch:
+#        src: /root/.kube/config
+#        dest: /root/.kube/config
+#        flat: yes
+#        
+#- name: Post installation configuration
+#  hosts: localhost
+#  tasks:
+#    - name: Verify logged in User is system:dmin
+#      shell: oc whoami | grep system:admin
+#
+#- name: Admin User admin as Cluster Admin
+#  hosts: localhost
+#  tasks:
+#    - name: Admin User admin as Cluster Admin
+#      shell: oc adm policy add-cluster-role-to-user cluster-admin admin
+#
+#- name: Create PVs for Users
+#  hosts: nfs
+#  tasks:
+#    - name: Create PV directories
+#      script: /root/openshift-homework/scripts/create_pvs.sh
+#    - name: Restarting NFS Server...
+#      shell: systemctl restart nfs-server
+#
+#- name: Create 25 definitions files for PVs 5G size
+#  hosts: localhost
+#  tasks:
+#    - name: Create ReadWriteOnce PV definitions
+#      script: /root/openshift-homework/scripts/pvs_5Gsize.sh
+#
+#- name: Create 25 definitions files for PVs 10G size
+#  hosts: localhost
+#  tasks:
+#    - name: Create ReadWriteMany PV definitions
+#      script: /root/openshift-homework/scripts/pvs_10Gsize.sh
+#
+#- name: Create all PVs from definitions files
+#  hosts: localhost
+#  tasks:
+#    - name: Create all defined PVs
+#      shell: cat /root/pvs/* | oc create -f -
+#
+#- name: Fix NFS Persistent Volume Recycling
+#  hosts: nodes
+#  tasks:
+#    - name: Pull Latest OSE-Recycler Image
+#      shell: docker pull registry.access.redhat.com/openshift3/ose-recycler:latest
+#    - name: Tag OSE-Recycler Image
+#      shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
+#
+#- name: Kube Config
+#  hosts: localhost
+#  tasks:
+#    - name: copy kube config
+#      shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
+#
+#- name: Login System Admin
+#  hosts: localhost
+#  tasks:
+#    - name: change user to system:dmin
+#      shell: oc login -u system:admin
+#
+#- name: Update Default Project
+#  hosts: localhost
+#  tasks:
+#    - name: Label Default Project
+#      shell: oc label namespace default name=default
+#
+##- name: Applying Network Policy
+##  hosts: localhost
+##  tasks:
+##    - name: Apply network policy 
+##      shell: oc create -f /root/openshift-homework/yaml/networkpolicy.yaml
+#
+#- name: Creating Default Template
+#  hosts: localhost
+#  tasks:
+#    - name: Creating Default Template 
+#      shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
+#
+#- name: Set defaults for new projects
+#  hosts: masters
+#  tasks:
+#    - name: Set project request template as default
+#      replace:
+#        path: /etc/origin/master/master-config.yaml
+#        regexp: "projectRequestTemplate: ''"
+#        replace: "projectRequestTemplate: \"default/project-request\""
+#        backup: yes
+#
+#- name: Restart master api and controllera
+#  hosts: masters
+#  tasks:
+#    - name: Restart masters api and controllers
+#      command: "/usr/local/bin/master-restart {{ item }}"
+#      with_items:
+#        - api
+#        - controllers
+#      retries: 10
+#      delay: 10
+#      register: result
+#      until: result.rc == 0
+#      
 - name: Creating Groups
   hosts: localhost
   tasks:
@@ -202,6 +196,13 @@
         - group/beta-corp client=beta
         - group/alpha-corp client=alpha
         - group/common client=common
+
+- name: Removing Self Provisning from Users
+  hosts: localhost
+  tasks:
+    - name: Removing Self Provisning from Users
+#      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
+      shell: oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
       
 - name: Adding role processedtemplates.template.openshift.io to Groups
   hosts: localhost
@@ -238,6 +239,20 @@
   tasks:
     - name: Deploy App to Alpha Corp
       script: /root/openshift-homework/scripts/beta-corp-cicd.sh
+      
+- name: Deploy App to Common
+  hosts: localhost
+  tasks:
+    - name: Deploy App to Common
+      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
+      
+- name: Auto Scale
+  hosts: localhost
+  tasks:
+    - name: Auto Scale
+      script: oc autoscale dc/nodejs-mongo-persistent --min 1 --max 2 --cpu-percent=30
+      
+ 
 
 ##
 ##
