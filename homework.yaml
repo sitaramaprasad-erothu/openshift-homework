@@ -154,15 +154,15 @@
     - name: Creating Default Template 
       shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
 
-- name: Updating Master Config
+- name: Set defaults for new projects
   hosts: masters
   tasks:
-    - replace:
-        dest: /etc/origin/master/master-config.yaml
-        regexp: '^  projectRequestTemplate: "''"'
-        replace: '\  projectRequestTemplate: default/project-request\'
-    - name: Updating Master Config 
-      shell: ansible masters -m shell -a "sed -i -e 's@projectRequestTemplate: '"''"'@projectRequestTemplate: default/project-request@g' etc/origin/master/master-config.yaml"
+    - name: Set project request template as default
+      replace:
+        path: /etc/origin/master/master-config.yaml
+        regexp: "projectRequestTemplate: ''"
+        replace: "projectRequestTemplate: \"default/project-request\""
+        backup: yes
 
 - name: Updating Master Config
   hosts: localhost
@@ -195,34 +195,19 @@
     - name: Adding role processedtemplates.template.openshift.io to Beta Corp
       shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
    
-- name: Applying Limits to Default Templet
-  hosts: localhost
-  tasks:
-    - name: Applying limits to default templet
-      shell: oc create -f /root/openshift-homework/yaml/project-template.yaml
 
-- name: Set defaults for new projects
-  hosts: masters
-  tasks:
-    - name: Set project request template as default
-      replace:
-        path: /etc/origin/master/master-config.yaml
-        regexp: "projectRequestTemplate: ''"
-        replace: "projectRequestTemplate: \"default/project-request\""
-        backup: yes
-
-- name: Restart master api and controllera
-  hosts: masters
-  tasks:
-    - name: Restart masters api and controllers
-      command: "/usr/local/bin/master-restart {{ item }}"
-      with_items:
-        - api
-        - controllers
-      retries: 10
-      delay: 10
-      register: result
-      until: result.rc == 0
+#- name: Restart master api and controllera
+#  hosts: masters
+#  tasks:
+#    - name: Restart masters api and controllers
+#      command: "/usr/local/bin/master-restart {{ item }}"
+#      with_items:
+#        - api
+#        - controllers
+#      retries: 10
+#      delay: 10
+#      register: result
+#      until: result.rc == 0
       
 #- name: Deploy App to Alpha Corp
 #  hosts: localhost
