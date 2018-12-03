@@ -130,12 +130,6 @@
     - name: copy kube config
       shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
 
-- name: Login System Admin
-  hosts: localhost
-  tasks:
-    - name: change user to system:dmin
-      shell: oc login -u system:admin
-
 - name: Update Default Project
   hosts: localhost
   tasks:
@@ -178,45 +172,32 @@
     - name: Waiting for services after restart
       shell: sleep 180
       
-- name: Login System Admin
+- name: Creating Users and Groups
   hosts: localhost
   tasks:
-    - name: change user to system:admin
-      shell: oc login -u system:admin
-
-- name: Creating Group For Alpha Corp
-  hosts: localhost
-  tasks:
+    - name: Creating users in openshift 
+        command: "oc create user {{ item }}"
+        with_items:
+          - Amy
+          - Andrew
+          - Brian
+          - Betty
+          - Chris
+          - Cody
     - name: Adding user for Alpha Group
       shell: oc adm groups new alpha-corp andrew amy
-
-- name: Creating Group For Beta Corp
-  hosts: localhost
-  tasks:
     - name: Adding user for Beta Group
       shell: oc adm groups new beta-corp brian betty
-
-- name: Creating Group For Common
-  hosts: localhost
-  tasks:
     - name: Adding user for Common
       shell: oc adm groups new common user1 user2
 
-- name: Adding Label to User Group Beta Corp
+- name: Adding Label to Groups
   hosts: localhost
   tasks:
     - name: Adding Label to User Group for Beta Group
       shell: oc label group/beta-corp client=beta
-
-- name: Adding Label to User Group Alpha Corp
-  hosts: localhost
-  tasks:
     - name: Adding Label to User Group for Alpha Group
       shell: oc label group/alpha-corp client=alpha
-
-- name: Adding Label to User Group Common Corp
-  hosts: localhost
-  tasks:
     - name: Adding Label to User Group for CommonGroup
       shell: oc label group/common client=common
       
@@ -255,32 +236,32 @@
 #  tasks:
 #    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
 #      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io common
-   
- 
-- name: Deploy App to Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Deploy App to Alpha Corp
-      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
-
-     
-- name: Deploy App to Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Deploy App to Alpha Corp
-      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
-      
-- name: Deploy App to Common
-  hosts: localhost
-  tasks:
-    - name: Deploy App to Common
-      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
-      
-- name: Auto Scale
-  hosts: localhost
-  tasks:
-    - name: Auto Scale
-      script: oc autoscale dc/nodejs-mongo-persistent --min 1 --max 2 --cpu-percent=30
+#   
+# 
+#- name: Deploy App to Alpha Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Deploy App to Alpha Corp
+#      script: /root/openshift-homework/scripts/alpha-corp-cicd.sh
+#
+#     
+#- name: Deploy App to Beta Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Deploy App to Alpha Corp
+#      script: /root/openshift-homework/scripts/beta-corp-cicd.sh
+#      
+#- name: Deploy App to Common
+#  hosts: localhost
+#  tasks:
+#    - name: Deploy App to Common
+#      script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
+#      
+#- name: Auto Scale
+#  hosts: localhost
+#  tasks:
+#    - name: Auto Scale
+#      script: oc autoscale dc/nodejs-mongo-persistent --min 1 --max 2 --cpu-percent=30
       
  
 
