@@ -2,10 +2,10 @@
 
 oc login -u system:admin
 
-oc new-project beta-task-dev --node-selector='client=beta'
-oc new-project beta-task-test --node-selector='client=beta'
-oc new-project beta-task-prod --node-selector='client=beta'
-oc new-project beta-cicd-dev --node-selector='client=beta'
+oc new-project beta-task-dev
+oc new-project beta-task-test
+oc new-project beta-task-prod
+oc new-project beta-cicd-dev
 
 oc label namespace beta-cicd-dev client=beta
 oc annotate namespace beta-cicd-dev openshift.io/node-selector='client=beta'
