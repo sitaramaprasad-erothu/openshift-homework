@@ -168,16 +168,21 @@
         - api
         - controllers
       retries: 10
-      delay: 10
+      delay: 30
       register: result
       until: result.rc == 0
 
+- name: Waiting for services after restart
+  hosts: localhost
+  tasks:
+    - name: Waiting for services after restart
+      shell: sleep 180
+      
 - name: Login System Admin
   hosts: localhost
   tasks:
-    - name: change user to system:dmin
+    - name: change user to system:admin
       shell: oc login -u system:admin
-
 
 - name: Creating Group For Alpha Corp
   hosts: localhost

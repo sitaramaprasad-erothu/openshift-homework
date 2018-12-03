@@ -2,10 +2,10 @@
 
 oc login -u system:admin
 
-oc new-project alpha-cicd-dev --node-selector='client=alpha'
-oc new-project alpha-task-dev --node-selector='client=alpha'
-oc new-project alpha-task-test --node-selector='client=alpha'
-oc new-project alpha-task-prod --node-selector='client=alpha'
+oc new-project alpha-cicd-dev
+oc new-project alpha-task-dev
+oc new-project alpha-task-test
+oc new-project alpha-task-prod
 
 oc label namespace alpha-cicd-dev client=alpha
 oc annotate namespace alpha-cicd-dev openshift.io/node-selector='client=alpha'
