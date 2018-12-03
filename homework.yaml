@@ -199,7 +199,8 @@
       script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
     - name: Waiting for nodejs to start
       shell: sleep 300
-    - name: Auto Scale Alpha Corp task app
+    - name: Login as  Alpha Corp user
       shell: oc login -u amy -p r3dh4t1!
+    - name: Auto Scale Alpha Corp task app
       shell: oc autoscale dc/tasks --min 1 --max 2 --cpu-percent=30 -n alpha-task-prod
 ##  ....
