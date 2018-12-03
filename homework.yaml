@@ -176,14 +176,14 @@
   hosts: localhost
   tasks:
     - name: Creating users in openshift 
-        command: "oc create user {{ item }}"
-        with_items:
-          - Amy
-          - Andrew
-          - Brian
-          - Betty
-          - Chris
-          - Cody
+      command: "oc create user {{ item }}"
+      with_items:
+        - Amy
+        - Andrew
+        - Brian
+        - Betty
+        - Chris
+        - Cody
     - name: Adding user for Alpha Group
       shell: oc adm groups new alpha-corp andrew amy
     - name: Adding user for Beta Group
