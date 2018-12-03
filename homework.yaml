@@ -220,41 +220,41 @@
     - name: Adding Label to User Group for CommonGroup
       shell: oc label group/common client=common
       
-- name: Removing Self Provisning from Users
-  hosts: localhost
-  tasks:
-    - name: Removing Self Provisning from Users
+#- name: Removing Self Provisning from Users
+#  hosts: localhost
+#  tasks:
+#    - name: Removing Self Provisning from Users
 #      shell: oc adm policy remove-cluster-role-from-group self-provisioner system:authenticated:oauth
 #      shell: oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
-      script: /root/openshift-homework/scripts/remoselfProvisning.sh
+#      script: /root/openshift-homework/scripts/remoselfProvisning.sh
+#      
+#- name: Adding role processedtemplates.template.openshift.io to Groups
+#  hosts: localhost
+#  tasks:
+#    - name: Adding role processedtemplates.template.openshift.io
+#      command: "oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io {{ item }}"
+#      with_items:
+#        - alpha-corp
+#        - beta-corp
+#        - common
       
-- name: Adding role processedtemplates.template.openshift.io to Groups
-  hosts: localhost
-  tasks:
-    - name: Adding role processedtemplates.template.openshift.io
-      command: "oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io {{ item }}"
-      with_items:
-        - alpha-corp
-        - beta-corp
-        - common
-      
-- name: Adding role processedtemplates.template.openshift.io to Alpha Corp
-  hosts: localhost
-  tasks:
-    - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
-      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io alpha-corp
-
-- name: Adding role processedtemplates.template.openshift.io to Beta Corp
-  hosts: localhost
-  tasks:
-    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
-      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
-      
-- name: Adding role processedtemplates.template.openshift.io to Common
-  hosts: localhost
-  tasks:
-    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
-      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io common
+#- name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Adding role processedtemplates.template.openshift.io to Alpha Corp
+#      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io alpha-corp
+#
+#- name: Adding role processedtemplates.template.openshift.io to Beta Corp
+#  hosts: localhost
+#  tasks:
+#    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
+#      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io beta-corp
+#      
+#- name: Adding role processedtemplates.template.openshift.io to Common
+#  hosts: localhost
+#  tasks:
+#    - name: Adding role processedtemplates.template.openshift.io to Beta Corp
+#      shell: oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io common
    
  
 - name: Deploy App to Alpha Corp

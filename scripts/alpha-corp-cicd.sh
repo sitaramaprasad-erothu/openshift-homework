@@ -2,13 +2,13 @@
 
 oc login -u system:admin
 
-oc adm new project alpha-cicd-dev
+oc new-project project alpha-cicd-dev
 oc new-project alpha-task-dev
 oc new-project alpha-task-test
 oc new-project alpha-task-prod
 
-#oc label namespace alpha-cicd-dev client=alpha
-#oc annotate namespace alpha-cicd-dev openshift.io/node-selector='client=alpha'
+oc label namespace alpha-cicd-dev client=alpha
+oc annotate namespace alpha-cicd-dev openshift.io/node-selector='client=alpha'
 oc label namespace alpha-task-dev client=alpha
 oc annotate namespace alpha-task-dev openshift.io/node-selector='client=alpha'
 oc label namespace alpha-task-test client=alpha
