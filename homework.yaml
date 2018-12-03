@@ -4,19 +4,7 @@
   tasks:
     - name: Backup of existing Inventory Hosts File
       shell: cp -f /etc/ansible/hosts /etc/ansible/hosts."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
-
-- name: Backup of existing Password File
-  hosts: localhost
-  tasks:
-    - name: Backup of existing Password File
-      shell: cp -f /root/htpasswd.openshift /root/htpasswd.openshift."`date +"%d-%m-%Y-%H-%M-%S-%3N"`"
-
-- name: copy new  password File
-  hosts: localhost
-  tasks:
-    - name: copy new  password File
-      shell: cp -f /root/openshift-homework/htpasswd.openshift /root/htpasswd.openshift
-      
+     
 - name: Copy Inventory Hosts File
   hosts: localhost
   tasks:
@@ -117,12 +105,6 @@
     - name: Tag OSE-Recycler Image
       shell: docker tag registry.access.redhat.com/openshift3/ose-recycler:latest registry.access.redhat.com/openshift3/ose-recycler:v3.11.16
 
-- name: Kube Config
-  hosts: localhost
-  tasks:
-    - name: Copy Kube Config
-      shell: ansible masters[0] -b -m fetch -a "src=/root/.kube/config dest=/root/.kube/config flat=yes"
-
 - name: Update Default Project
   hosts: localhost
   tasks:
@@ -159,7 +141,16 @@
   tasks:
     - name: Waiting for services after restart
       shell: sleep 180
-      
+- name: Create users in htpassword file
+  hosts: masters
+  tasks:
+    - name: Creating users in Master htpasswd file 
+      command: "htpasswd -b /etc/origin/master/htpasswd {{ item }}"
+      with_items:
+        - amy r3dh4t1! 
+        - brian r3dh4t1! 
+        - betty r3dh4t1!
+        - admin r3dh4t1!
 - name: Creating Users and Groups
   hosts: localhost
   tasks:
@@ -185,10 +176,10 @@
         - group/beta-corp client=beta
         - group/common client=common
       
-- name: Removing Self Provisning and addning deployment role to users
+- name: Removing Self Provisioning and adding deployment role to users
   hosts: localhost
   tasks:
-    - name: Removing Self Provisning from Users
+    - name: Removing Self Provisioning from Users
       script: /root/openshift-homework/scripts/remoselfProvisning.sh
     - name: Adding role processedtemplates.template.openshift.io
       command: "oc adm policy add-cluster-role-to-group processedtemplates.template.openshift.io {{ item }}"
@@ -208,5 +199,7 @@
       script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
     - name: Auto Scale Nodejs
       script: sleep 300
-      script: oc autoscale dc/nodejs-mongo-persistent --min 1 --max 2 --cpu-percent=30
+      shell: oc autoscale dc/nodejs-mongo-persistent --min 1 --max 2 --cpu-percent=30
+      shell: oc login -u amy -p r3dh4t1!
+      shell: oc autoscale dc/tasks --min 1 --max 2 --cpu-percent=30 -n alpha-task-prod
 ##  ....
