@@ -35,7 +35,7 @@ oc login -u brian -p r3dh4t1!
 
 oc project alpha-cicd-dev
 
-oc new-app jenkins-persistent
+oc new-app jenkins-persistent -n alpha-cicd-dev
 # Deploy Demo
 oc new-app -n alpha-cicd-dev -f /root/openshift-homework/yaml/alpha-corp-cicd-template.yaml
 
