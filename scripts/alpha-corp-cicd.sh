@@ -31,7 +31,7 @@ oc adm policy add-role-to-group admin alpha-corp -n alpha-task-test
 oc adm policy add-role-to-group admin alpha-corp -n alpha-task-prod
 oc adm policy add-role-to-group admin alpha-corp -n alpha-cicd-dev
 
-oc login -u brian -p r3dh4t1!
+oc login -u amy -p r3dh4t1!
 
 oc project alpha-cicd-dev
 
