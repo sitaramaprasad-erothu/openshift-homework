@@ -103,12 +103,8 @@ openshift_master_htpasswd_file=/root/htpasswd.openshift
 ###########################################################################
 
 # default selectors for router and registry services
-#openshift_router_selector='node-role.kubernetes.io/infra=true'
-#openshift_registry_selector='node-role.kubernetes.io/infra=true'
-
-# default selectors for router and registry services
-openshift_router_selector={'env':'infra'}
-openshift_registry_selector={'env':'infra'}
+openshift_router_selector='node-role.kubernetes.io/infra=true'
+openshift_registry_selector='node-role.kubernetes.io/infra=true'
 
 openshift_hosted_router_replicas=2
 #openshift_hosted_router_certificate={"certfile": "/path/to/router.crt", "keyfile": "/path/to/router.key", "cafile": "/path/to/router-ca.crt"}
