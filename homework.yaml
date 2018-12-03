@@ -1,10 +1,4 @@
 ---
-- name: Update script permissions
-  hosts: localhost
-  tasks:
-    - name: Update script permissions
-      shell: chmod +x /root/openshift-homework/scripts/*.sh
-      
 - name: Backup of existing Inventory Hosts File
   hosts: localhost
   tasks:
