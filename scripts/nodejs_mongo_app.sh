@@ -21,6 +21,5 @@ oc get pvc
 oc get route
 #Open URL to verify
 curl `oc get route | grep example.opentlc.com | awk '{ print $2 }'`
-#Delete the Smoke Test Project
-#oc delete project smoke-test
+
 

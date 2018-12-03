@@ -1,4 +1,0 @@
-APPLICATION_NAME=tasks
-NAMESPACE=tasks-build
-SOURCE_REPOSITORY_URL=https://github.com/chamilton614/ocp_advanced_deployment_homework.git
-SOURCE_REPOSITORY_REF=master
