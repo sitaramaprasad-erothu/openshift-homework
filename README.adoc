@@ -8,9 +8,13 @@ Please perform the following:
 
 * create a new environment
 * clone a repo - https://github.com/tripathisushil/openshift-homework.git
-* execute the command - 
-* examine the output through log files - 
+* Log location- Enable the log location at /etc/ansible/ansible.cfg
+* execute the command - ansible-playbook homework.yaml
+* examine the output through log files at location set in ansible.cfg
 * examine the deployed OpenShift to ensure that all aspects were deployed properly
+* Default password- r3dh4t1!
+
+Note- This repo was created for Training Home Work ( Red Hat Delivery Specialist - Advanced Platform-as-a-Service (PaaS) Administration ). We used content from 
 
 
 
