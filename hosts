@@ -27,10 +27,10 @@ openshift_hosted_infra_selector='env=infra'
 # If openshift_image_tag is set, its value is used for all hosts in system container environments, even those that have another version installed. If
 # Use this variable to specify a container image tag to install or configure.
 #openshift_pkg_version is set, its value is used for all hosts in RPM-based environments, even those that have another version installed.
-openshift_image_tag=v3.11.16
+openshift_image_tag=v3.11.51
 # Use this variable to specify an RPM version to install or configure.
-openshift_pkg_version=-3.11.16
-openshift_release=3.11.16
+openshift_pkg_version=-3.11.51
+openshift_release=3.11.51
 
 # Node Groups
 openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-common', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}]
@@ -49,13 +49,12 @@ openshift_enable_olm=true
 
 oreg_url=registry.redhat.io/openshift3/ose-${component}:${version}
 
-oreg_auth_user=12083267|sushilregistory
+oreg_auth_user=10955089|hyd1
 
-oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjY2FkOGNiNmM3YTQ0MDBjOTBmYjdmYWIxNDYxODYzYyJ9.PkncEOAzuneV6RPHDPLOk9CP2mrTcD3PY8YXWFpf5HYSO6G7kwTWnQ79zi_ZnXVXCoz_TqHv3x2v8C4dHTW51fC-B2cliOFtQRy8Y6Ly_ti8gAe0dk5FjHHdo1IyTCp-BZoBgPzp7HVcpemsynGp73flr5YC-eOCYIKivPK2IrPItDOvsfOHUUlG3VR2tJqGCoT46AyUvW8arS0ArJ0W2MmB7pTDCsCb7VhScGoWEsodgjXEjvF8zdcEz4fO8RiIqh_BX1cfo5yR4j1V4J9WaGnVcPwBsXl0j_zF5u9uNZRG3-k_xHhyc_pacH9TithJWBF510cqmuDWWOjk5cyhSfh5ixgE7G4NqV2mMFqCkJrXFbD2_Z9MhQwRWwNmujH5ZjJ14ayFQrRDCpsdlZ91jAKiWJ6YjZqp2LfN5rVi3d6ELDz1GtbLeWVACuFDFFkbjY1cvtKL7Nh2tAcy8JoyrZT-gG2tPUt-DRg09_G7j-zdYc3Y0UA31PIVtB7Iigefzw_gM8jCtHe5-TpBd4fRhpwo0BFDALg8a-EZa7ziuSQLP-SkmjrIjbgXIJwF5lp4pBDSxn4S47CE34qIcMe_yZNywolmdH6181wRihkLefETZEA-A-eIK4e4QOSc4dHegOFtpcobGgrexnuSRlSgA7xZnSXHt1B3jU6rE8fuhZg
-
+oreg_auth_password=eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI1YjBhNmYwZjUxZDE0Yjg3YTMwNmU1YjQ4MjFiNTE3NSJ9.MqKR21lOx8NpXEETrqtI5bitVU2FmF7sCq7Dshk84eJkjnbYv5Knky13LdS1F5pf2Mi2GD4sNr6bm0kIhG5cBf6TU_YQGiCApVkH_IJCuK-aTDJQXc46oBkRu3up0tI_0blqwm_wP419ls_JFiQ7Q84s9nXWslZq5oDi_spjFqhOfevr6N_Kp4ERHGZ0HB_37xqL2XRPBp8-GoLAh3JsTHNqbEErwV2aegKVuux9oE5wSzVUsitiWrs0Oj1i2cGacnkqfjR6KO2V5I4CmatvF6gSM-T2qUYuYpIfqu3u5MyLedC-ttBJy-Fla-7TE2zfyFXAKBZb7GZNj4bTDsXKVjZXDRDmWpvjuwJY7wXp00S469o8MvYd-t2QHbGu9F4toRpKhtrgjnkOvGfRZCYC0OP4BLlHIA0I2LH6v3AGw-qbxnq59HBXMhXcJ-UYPh5FV4So8BvxoeOTu6mzBMD9sNxh62bk9s_93Wte-mxCI72lVJtV8oS_smmvoZX8835zUnIvu-IlkTiTH-SuA7g_mAE56hCzXlGnsjjebrwVGS3frJyF6roM6kMZn32a3UC2qC86RGJtjAKPE43dN37rr6HLyEymxTAtW7pOTXatxUrUwHYqkV1evwJOWGAbLwvW2ow-khsdOMJj4qvvXghVaTdufu4qIffKPnlrLDtf_8M
 # For Operator Framework Images
 
-openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'12083267|sushilregistory','password':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJjY2FkOGNiNmM3YTQ0MDBjOTBmYjdmYWIxNDYxODYzYyJ9.PkncEOAzuneV6RPHDPLOk9CP2mrTcD3PY8YXWFpf5HYSO6G7kwTWnQ79zi_ZnXVXCoz_TqHv3x2v8C4dHTW51fC-B2cliOFtQRy8Y6Ly_ti8gAe0dk5FjHHdo1IyTCp-BZoBgPzp7HVcpemsynGp73flr5YC-eOCYIKivPK2IrPItDOvsfOHUUlG3VR2tJqGCoT46AyUvW8arS0ArJ0W2MmB7pTDCsCb7VhScGoWEsodgjXEjvF8zdcEz4fO8RiIqh_BX1cfo5yR4j1V4J9WaGnVcPwBsXl0j_zF5u9uNZRG3-k_xHhyc_pacH9TithJWBF510cqmuDWWOjk5cyhSfh5ixgE7G4NqV2mMFqCkJrXFbD2_Z9MhQwRWwNmujH5ZjJ14ayFQrRDCpsdlZ91jAKiWJ6YjZqp2LfN5rVi3d6ELDz1GtbLeWVACuFDFFkbjY1cvtKL7Nh2tAcy8JoyrZT-gG2tPUt-DRg09_G7j-zdYc3Y0UA31PIVtB7Iigefzw_gM8jCtHe5-TpBd4fRhpwo0BFDALg8a-EZa7ziuSQLP-SkmjrIjbgXIJwF5lp4pBDSxn4S47CE34qIcMe_yZNywolmdH6181wRihkLefETZEA-A-eIK4e4QOSc4dHegOFtpcobGgrexnuSRlSgA7xZnSXHt1B3jU6rE8fuhZg','test_image':'mongodb/enterprise-operator:0.3.2'}]
+openshift_additional_registry_credentials=[{'host':'registry.connect.redhat.com','user':'10955089|hyd1','password':'eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI1YjBhNmYwZjUxZDE0Yjg3YTMwNmU1YjQ4MjFiNTE3NSJ9.MqKR21lOx8NpXEETrqtI5bitVU2FmF7sCq7Dshk84eJkjnbYv5Knky13LdS1F5pf2Mi2GD4sNr6bm0kIhG5cBf6TU_YQGiCApVkH_IJCuK-aTDJQXc46oBkRu3up0tI_0blqwm_wP419ls_JFiQ7Q84s9nXWslZq5oDi_spjFqhOfevr6N_Kp4ERHGZ0HB_37xqL2XRPBp8-GoLAh3JsTHNqbEErwV2aegKVuux9oE5wSzVUsitiWrs0Oj1i2cGacnkqfjR6KO2V5I4CmatvF6gSM-T2qUYuYpIfqu3u5MyLedC-ttBJy-Fla-7TE2zfyFXAKBZb7GZNj4bTDsXKVjZXDRDmWpvjuwJY7wXp00S469o8MvYd-t2QHbGu9F4toRpKhtrgjnkOvGfRZCYC0OP4BLlHIA0I2LH6v3AGw-qbxnq59HBXMhXcJ-UYPh5FV4So8BvxoeOTu6mzBMD9sNxh62bk9s_93Wte-mxCI72lVJtV8oS_smmvoZX8835zUnIvu-IlkTiTH-SuA7g_mAE56hCzXlGnsjjebrwVGS3frJyF6roM6kMZn32a3UC2qC86RGJtjAKPE43dN37rr6HLyEymxTAtW7pOTXatxUrUwHYqkV1evwJOWGAbLwvW2ow-khsdOMJj4qvvXghVaTdufu4qIffKPnlrLDtf_8M','test_image':'mongodb/enterprise-operator:0.3.2'}]
 
 openshift_examples_modify_imagestreams=true
 
@@ -68,8 +67,8 @@ openshift_master_console_port=443
 
 openshift_master_cluster_method=native
 
-openshift_master_cluster_hostname=loadbalancer1.GUID.internal
-openshift_master_cluster_public_hostname=loadbalancer1.GUID.example.opentlc.com
+openshift_master_cluster_hostname=loadbalancer.GUID.internal
+openshift_master_cluster_public_hostname=loadbalancer.GUID.example.opentlc.com
 openshift_master_default_subdomain=apps.GUID.example.opentlc.com
 
 
@@ -319,7 +318,7 @@ nodes
 nfs
 
 [lb]
-loadbalancer1.GUID.internal
+loadbalancer.GUID.internal
 
 [masters]
 master1.GUID.internal
