@@ -345,8 +345,6 @@ infranode2.GUID.internal openshift_hostname=infranode2.GUID.internal openshift_n
 node1.GUID.internal openshift_hostname=node1.GUID.internal  openshift_node_group_name='node-config-alpha' openshift_node_problem_detector_install=true
 node2.GUID.internal openshift_hostname=node2.GUID.internal  openshift_node_group_name='node-config-beta' openshift_node_problem_detector_install=true
 node3.GUID.internal openshift_hostname=node3.GUID.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
-node4.GUID.internal openshift_hostname=node4.GUID.internal  openshift_node_group_name='node-config-common' openshift_node_problem_detector_install=true
-
 [nfs]
 support1.GUID.internal openshift_hostname=support1.GUID.internal
 
