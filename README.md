@@ -1,1 +1,1 @@
-# openshift-homework
+# OpenShift-Homework
