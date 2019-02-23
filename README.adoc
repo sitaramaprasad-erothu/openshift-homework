@@ -1,4 +1,4 @@
-= OpenShift Container Platform - Advanced Deployment - Homework for Sushil K. Tripathi
+= OpenShift Container Platform - Advanced Deployment - Homework for Sitaramaprasad Erothu
 Websites for GWAR and Hatebreed
 
 Use the files in this repo to guide you on your way to creating
@@ -7,7 +7,7 @@ a fully automated deployment of OpenShift.
 Please perform the following:
 
 * create a new environment
-* clone a repo - https://github.com/tripathisushil/openshift-homework.git
+* clone a repo - https://github.com/sitaramaprasad-erothu/openshift-homework.git
 * Log location- Enable the log location at /etc/ansible/ansible.cfg
 * execute the command - ansible-playbook homework.yaml
 * examine the output through log files at location set in ansible.cfg
