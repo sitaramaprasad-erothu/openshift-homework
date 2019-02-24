@@ -35,7 +35,7 @@ openshift_release=3.11.51
 # Node Groups
 openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true','runtime=docker','env=master','cluster=GUID']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true','runtime=docker','env=infra','cluster=GUID']}, {'name': 'node-config-alpha', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=alpha','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-beta', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=beta','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}, {'name': 'node-config-common', 'labels': ['node-role.kubernetes.io/compute=true','runtime=docker','client=common','cluster=GUID'], 'edits': [{ 'key': 'kubeletArguments.pods-per-core','value': ['20']}]}]
 
-# Configure logrotate scripts
+# Configure logrotate scriptss
 # See: https://github.com/nickhammond/ansible-logrotate
 logrotate_scripts=[{"name": "syslog", "path": "/var/log/cron\n/var/log/maillog\n/var/log/messages\n/var/log/secure\n/var/log/spooler\n", "options": ["daily", "rotate 7","size 500M", "compress", "sharedscripts", "missingok"], "scripts": {"postrotate": "/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true"}}]
 
