@@ -77,5 +77,5 @@
     - name: Deploy
       script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
     - name: Waiting for nodejs to start
-      shell: sleep 300
+      shell: sleep 400
 ##  ....
