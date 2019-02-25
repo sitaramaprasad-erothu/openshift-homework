@@ -71,16 +71,10 @@
     - name: Admin User admin as Cluster Admin
       shell: oc adm policy add-cluster-role-to-user cluster-admin admin
 
-- name: Update Default Project
-  hosts: localhost
-  tasks:
-    - name: Label Default Project
-      shell: oc label namespace default name=default
-
 - name: Deploy Apps
   hosts: localhost
   tasks:
-    - name: Deploy App to Common
+    - name: Deploy
       script: /root/openshift-homework/scripts/nodejs_mongo_app.sh
     - name: Waiting for nodejs to start
       shell: sleep 300

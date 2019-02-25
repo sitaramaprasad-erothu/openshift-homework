@@ -3,10 +3,10 @@
 #Create Smoke Test Project
 oc login -u system:admin
 oc new-project smoke-test
-oc label namespace nodejs-common-test client=common
-oc annotate namespace smoke-test openshift.io/node-selector='client=common'
-oc adm policy add-role-to-group admin common -n smoke-test
-oc login -u user1 -p r3dh4t1!
+#oc label namespace nodejs-common-test client=common
+#oc annotate namespace smoke-test openshift.io/node-selector='client=common'
+#oc adm policy add-role-to-group admin common -n smoke-test
+#oc login -u user1 -p r3dh4t1!
 #Add the NodeJS Mongo Application
 oc new-app nodejs-mongo-persistent
 #Check the status of the pods
